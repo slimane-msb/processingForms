@@ -29,6 +29,11 @@ void draw() {
 }
 
 PShape makeShapeS(int[] numbers) {
+  PShape shape = createShape();
+  
+  //
+  
+  return shape;
 }
 
 PShape makeShapeJ(int[] numbers) {
