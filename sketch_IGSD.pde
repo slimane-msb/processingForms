@@ -29,17 +29,19 @@ void draw() {
 }
 
 PShape makeShapeS(int[] numbers) {
-  PShape shape = createShape();
+  PShape structure = createShape();
   
   //
   
-  return shape;
+  return structure;
 }
 
 PShape makeShapeJ(int[] numbers) {
-  PShape shape = createShape();
+  PShape structure = createShape();
+  structure.beginShape();
   
   //
   
-  return shape;
+  structure.endShape();
+  return structure;
 }
