@@ -21,10 +21,8 @@ void setup() {
 void draw() {
   
   //create the PShape
-  makeShapeS(numbersS);
-  makeShapeJ(numbersJ);
-  
-  //Draw the PShapes
+  shape(makeShapeS(numbersS));
+  shape(makeShapeJ(numbersJ));
   
   //Place the camera
   
@@ -34,4 +32,9 @@ PShape makeShapeS(int[] numbers) {
 }
 
 PShape makeShapeJ(int[] numbers) {
+  PShape shape = createShape();
+  
+  //
+  
+  return shape;
 }
