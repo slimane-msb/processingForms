@@ -20,7 +20,6 @@ void setup(){
 
 void draw() {
   
-  //create the PShape
   //shape(makeShapeS(numbersS));
   //shape(makeShapeJ(numbersJ));
   
@@ -44,15 +43,13 @@ PShape makeShapeJ(int[] numbers) {
   PShape structure = createShape();
   
   int level = 0;
+  int index = 0;
   while(numbers.length > 0) {
     
     float centerY = level*ELEMENT_SIZE;
-      int index=0;
+
       for(int cell=0; cell<((level == 0) ? 1 : 6*level); cell++) {
-        // pour supprimer un element d'un tableau en java, ce n'est pas avec pop. 
-        // 1. pour avoir l'element 
         int n = numbers[index];
-        //2. pour supprimer ( a une complixite O(n) donc tu le supprime pas, supprime tous le tableau a la fin
         
         //Extrapolate the coords
         float centerX = 0;
@@ -60,13 +57,17 @@ PShape makeShapeJ(int[] numbers) {
         
         //Get color
         color c = getColor(n);
+        noStroke();
+        fill(c);
         
-        //Draw hexagon
+        //Draw hexagon walls
         structure.beginShape(QUAD_STRIP);
         structure.endShape();
         
+        //Draw hexagon top and bottom
         structure.beginShape();
         structure.endShape();
+        
         index++;
       }
     
