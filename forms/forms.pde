@@ -38,8 +38,26 @@ void draw() {
   testingCounter++; //debugging
 }
 
+int sumDivisors(int n) {
+  int s = 0;
+  for(int i=0; i<pow(n, 1/2); i++) {
+    if((float(n)/float(i))%1 == 0) {s += i;}
+  }
+  return s;
+}
+
 color getColor(int n) {
-  return  color(n, n*1.5, n*0.7);
+  int sd = sumDivisors(n) - n; //Substract n to avoid the doubling later
+  
+  if(sd == 1) { //Prime
+    return color(0, 255, 0);
+  } else if(sd == n) { //Perfect
+    return color(255, 0, 255);
+  } else if(sd < n) { //Deficient
+    return color(255, 0, 0);
+  } else { //Abundant
+    return color(0, 0, 255);
+  }
 }
 
 PShape makeShapeS(int[] numbers) {
