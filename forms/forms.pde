@@ -20,32 +20,32 @@ void setup(){
   for(int i=0; i<100; i++) {
     numbersJ[i] = i;
   }
-  
-   
+  translate(300,300);
+   makeShapeSFinal(8);
 
 }
 
 
-int testingCounter = 0; //debugging
+//int testingCounter = 0; //debugging
 
 void draw() {
 
-  // makeShapeSFinal(8);
+   
   
-  background(0);
-  lights();
+  //background(0);
+  //lights();
   
-  shape(makeShapeS(numbersS));
+ 
   //shape(makeShapeJ(numbersJ));
   
-  fill(color(255, 255, 255));
+  //fill(color(255, 255, 255));
   //box(100); //debugging
   
   //Place the camera
   //camera(5, 15, 5, 0, 0, 0, 0, 1, 0);
   //camera(width/2, height/2, (height/2) / tan(PI/6), 0, 0, 0, 0, 1, 0);
   
-  testingCounter++; //debugging
+  //testingCounter++; //debugging
 }
 
 
@@ -142,19 +142,19 @@ PShape makeShapeS(int longeur,int surface, int centerX,int centerY) {
     drawSquareRight(longeur,centerX,centerY,1,0);
     drawSquareDown(longeur,centerX+longeur,centerY,2,1);
     
+    beginShape();
     int j=2;
     int caseNb=3;
     int tourNb= 0;
-    int i=2;
     
-    for (int k=0; k<surface-3;k++){
-      if(listS.size()>=0){
-        i=listS.remove(0);
-        print("\n i"+i+"\n j"+j+"\n caseNb"+caseNb+"\n tourNb"+tourNb);
+    
+    for (int i=0; i<surface-3;i++){
+        print("\n i"+i+"\n j"+j+"\n caseNb"+caseNb+"\n tourNb\n\n"+tourNb);
         //go left
         if (i%4==0){
           drawSquareLeft(longeur,centerX+longeur*(tourNb+1),centerY-longeur*(tourNb-1),j,caseNb);
           caseNb+=j;
+          print("LEFT");
           
         }
         // draw up
@@ -177,8 +177,9 @@ PShape makeShapeS(int longeur,int surface, int centerX,int centerY) {
         if(i%2==1){
           j++;
         }
-      }
+      
     }
+    endShape();
     
   
     
