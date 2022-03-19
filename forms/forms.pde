@@ -18,13 +18,24 @@ void setup(){
   }
 }
 
+int testingCounter = 0; //debugging
+
 void draw() {
   
+  background(0);
+  lights();
+  
   //shape(makeShapeS(numbersS));
-  //shape(makeShapeJ(numbersJ));
+  shape(makeShapeJ(numbersJ));
+  
+  fill(color(255, 255, 255));
+  //box(100); //debugging
   
   //Place the camera
+  //camera(5, 15, 5, 0, 0, 0, 0, 1, 0);
+  camera(width/2, height/2, (height/2) / tan(PI/6), 0, 0, 0, 0, 1, 0);
   
+  testingCounter++; //debugging
 }
 
 color getColor(int n) {
@@ -44,11 +55,13 @@ PShape makeShapeJ(int[] numbers) {
   
   int level = 0;
   int index = 0;
-  while(numbers.length > 0) {
+  while(index <= numbers.length) {
     
     float centerY = level*ELEMENT_SIZE;
 
       for(int cell=0; cell<((level == 0) ? 1 : 6*level); cell++) {
+        
+        if(index >= numbers.length) {break;}
         int n = numbers[index];
         
         //Extrapolate the coords
@@ -57,6 +70,7 @@ PShape makeShapeJ(int[] numbers) {
         
         //Get color
         color c = getColor(n);
+        c = color(255, 255, 255); //debugging
         noStroke();
         fill(c);
         
@@ -66,10 +80,16 @@ PShape makeShapeJ(int[] numbers) {
         
         //Draw hexagon top and bottom
         structure.beginShape();
+        vertex(-150, 0, 0); //pas encore un hexagone, je sais c'est juste pour le debugging
+        vertex(0, 0, 50);
+        vertex(150, 0, 0);
+        vertex(0, 0, -50);
         structure.endShape();
         
         index++;
       }
+    
+    if(index >= numbers.length) {break;}
     
     level++;
   }
