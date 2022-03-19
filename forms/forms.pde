@@ -25,19 +25,29 @@ void setup(){
 
 }
 
+
+int testingCounter = 0; //debugging
+
 void draw() {
+
+  // makeShapeSFinal(8);
   
-  //create the PShape
-  makeShapeSFinal(8);
+  background(0);
+  lights();
+  
+  shape(makeShapeS(numbersS));
   //shape(makeShapeJ(numbersJ));
   
+  fill(color(255, 255, 255));
+  //box(100); //debugging
+  
   //Place the camera
+  //camera(5, 15, 5, 0, 0, 0, 0, 1, 0);
+  //camera(width/2, height/2, (height/2) / tan(PI/6), 0, 0, 0, 0, 1, 0);
   
-  // set up zoom 
- 
-
-  
+  testingCounter++; //debugging
 }
+
 
 
 int sumDivisors(int n) {
@@ -179,19 +189,20 @@ PShape makeShapeS(int longeur,int surface, int centerX,int centerY) {
   return shape;
 }
 
+
 PShape makeShapeJ(int[] numbers) {
   PShape structure = createShape();
   
   int level = 0;
-  while(numbers.length > 0) {
+  int index = 0;
+  while(index <= numbers.length) {
     
     float centerY = level*ELEMENT_SIZE;
-      int index=0;
+
       for(int cell=0; cell<((level == 0) ? 1 : 6*level); cell++) {
-        // pour supprimer un element d'un tableau en java, ce n'est pas avec pop. 
-        // 1. pour avoir l'element 
+        
+        if(index >= numbers.length) {break;}
         int n = numbers[index];
-        //2. pour supprimer ( a une complixite O(n) donc tu le supprime pas, supprime tous le tableau a la fin
         
         //Extrapolate the coords
         float centerX = 0;
@@ -199,15 +210,26 @@ PShape makeShapeJ(int[] numbers) {
         
         //Get color
         color c = getColor(n);
+        c = color(255, 255, 255); //debugging
+        noStroke();
+        fill(c);
         
-        //Draw hexagon
+        //Draw hexagon walls
         structure.beginShape(QUAD_STRIP);
         structure.endShape();
         
+        //Draw hexagon top and bottom
         structure.beginShape();
+        vertex(-150, 0, 0); //pas encore un hexagone, je sais c'est juste pour le debugging
+        vertex(0, 0, 50);
+        vertex(150, 0, 0);
+        vertex(0, 0, -50);
         structure.endShape();
+        
         index++;
       }
+    
+    if(index >= numbers.length) {break;}
     
     level++;
   }
