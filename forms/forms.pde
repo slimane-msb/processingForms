@@ -29,33 +29,9 @@ void setup(){
 
 void draw() {
   
-  // rotate l'objet pour mieux voir ce que ca donne 
-  lights();
-  background(0);
-  float mX= -(mouseX-1000.0)/500.0;
-  float mY= -(mouseY-1000.0)/500.0;
-  translate(mouseX,mouseY);
-  rotateX(PI*(mX));
-  rotateZ(PI*(mY));
-  
-  //draw S shape
-  
- makeShapeSFinal(150);
 
-   
-  
-  //background(0);
-  //lights();
-  
- 
   //shape(makeShapeJ(numbersJ));
-  
-  //fill(color(255, 255, 255));
-  //box(100); //debugging
-  
-  //Place the camera
-  //camera(5, 15, 5, 0, 0, 0, 0, 1, 0);
-  //camera(width/2, height/2, (height/2) / tan(PI/6), 0, 0, 0, 0, 1, 0);
+  makeShapeSMotion();
   
   //testingCounter++; //debugging
 }

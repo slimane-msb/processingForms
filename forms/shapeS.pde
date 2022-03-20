@@ -52,6 +52,26 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
   return shape;
 }
 
+PShape makeShapeSMotion(){
+  PShape shape = createShape();
+    // rotate l'objet pour mieux voir ce que ca donne 
+  lights();
+  background(0);
+  float mX= -(mouseX-1000.0)/500.0;
+  float mY= -(mouseY-1000.0)/500.0;
+  translate(mouseX,mouseY);
+  rotateX(PI*(mX));
+  rotateZ(PI*(mY));
+  
+  //draw S shape
+  
+ makeShapeSFinal(150);
+   
+  return shape;
+  
+}
+
+
 PShape makeShapeSFinal(int surface){
   PShape shape = createShape();
   //background(200);
