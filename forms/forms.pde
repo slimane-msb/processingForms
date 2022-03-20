@@ -21,7 +21,7 @@ void setup(){
     numbersJ[i] = i;
   }
   translate(300,300);
-   makeShapeSFinal(8);
+   
 
 }
 
@@ -29,6 +29,8 @@ void setup(){
 //int testingCounter = 0; //debugging
 
 void draw() {
+  
+  makeShapeSFinal(20);
 
    
   
@@ -80,7 +82,7 @@ PShape drawSquareRight(int longeur,int x,int y,int nbSquars,int txtInt){
       fill(0,100,0);
       square(j+x, y, longeur);
       fill(255,0,0);
-      textSize(longeur/2);
+      textSize(longeur/3);
       text(""+txtInt++,x+j+longeur/5, y+longeur/2); 
     }
   return shape;
@@ -92,7 +94,7 @@ PShape drawSquareLeft(int longeur,int x,int y,int nbSquars,int txtInt){
       fill(0,100,0);
       square(-longeur-j+x, y, longeur);
       fill(255,0,0);
-      textSize(longeur/2);
+      textSize(longeur/3);
       text(""+txtInt++,x-j-longeur+longeur/5, y+longeur/2); 
     }
   return shape;
@@ -104,7 +106,7 @@ PShape drawSquareDown(int longeur,int x,int y,int nbSquars,int txtInt){
       fill(0,100,0);
       square(x, y+j, longeur);
       fill(255,0,0);
-      textSize(longeur/2);
+      textSize(longeur/3);
       text(""+txtInt++,x+longeur/5, y+j+longeur/2); 
     }
   return shape;
@@ -116,7 +118,7 @@ PShape drawSquareUp(int longeur,int x,int y,int nbSquars,int txtInt){
       fill(0,100,0);
       square(x, y-j-longeur, longeur);
       fill(255,0,0);
-      textSize(longeur/2);
+      textSize(longeur/3);
       text(""+txtInt++,x+longeur/5, y-j-longeur+longeur/2); 
     }
   return shape;
@@ -149,27 +151,27 @@ PShape makeShapeS(int longeur,int surface, int centerX,int centerY) {
     
     
     for (int i=0; i<surface-3;i++){
-        print("\n i"+i+"\n j"+j+"\n caseNb"+caseNb+"\n tourNb\n\n"+tourNb);
+        print("\n i"+i+"\n j"+j+"\n caseNb"+caseNb+"\n tourNb"+tourNb+"\n\n");
         //go left
         if (i%4==0){
-          drawSquareLeft(longeur,centerX+longeur*(tourNb+1),centerY-longeur*(tourNb-1),j,caseNb);
+          drawSquareLeft(longeur,centerX+longeur*(tourNb+1),centerY+longeur*(tourNb+1),j,caseNb);
           caseNb+=j;
           print("LEFT");
           
         }
         // draw up
         if (i%4==1){
-          drawSquareUp(longeur,centerX-longeur*(tourNb+1),centerY-longeur*(tourNb-1),j,caseNb);
+          drawSquareUp(longeur,centerX-longeur*(tourNb+1),centerY+longeur*(tourNb+1),j,caseNb);
           caseNb+=j;
         }
         // draw right
         if (i%4==2){
-          drawSquareRight(longeur,centerX-longeur*(tourNb),centerY+longeur*(tourNb-1),j,caseNb);
+          drawSquareRight(longeur,centerX-longeur*(tourNb),centerY-longeur*(tourNb+1),j,caseNb);
           caseNb+=j;
         }
         // draw down
         if (i%4==3){
-          drawSquareDown(longeur,centerX+longeur*(tourNb+2),centerY+longeur*(tourNb),j,caseNb);
+          drawSquareDown(longeur,centerX+longeur*(tourNb+2),centerY-longeur*(tourNb),j,caseNb);
           caseNb+=j;
           // tour completed
           tourNb++;
