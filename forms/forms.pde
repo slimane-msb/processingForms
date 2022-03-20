@@ -20,7 +20,7 @@ void setup(){
   for(int i=0; i<100; i++) {
     numbersJ[i] = i;
   }
-  translate(300,300);
+ 
    
 
 }
@@ -30,6 +30,16 @@ void setup(){
 
 void draw() {
   
+  // rotate l'objet pour mieux voir ce que ca donne 
+  lights();
+  background(0);
+  float mX= -(mouseX-1000.0)/500.0;
+  float mY= -(mouseY-1000.0)/500.0;
+  translate(mouseX,mouseY);
+  rotateX(PI*(mX));
+  rotateZ(PI*(mY));
+  
+  //draw S shape
   makeShapeSFinal(20);
 
    
@@ -80,7 +90,10 @@ PShape drawSquareRight(int longeur,int x,int y,int nbSquars,int txtInt){
   PShape shape = createShape();
   for (int j=0; j<(longeur*nbSquars);j+=longeur){
       fill(0,100,0);
-      square(j+x, y, longeur);
+      pushMatrix();
+      translate(j+x, y, 0); 
+      box(longeur);
+      popMatrix();
       fill(255,0,0);
       textSize(longeur/3);
       text(""+txtInt++,x+j+longeur/5, y+longeur/2); 
@@ -92,7 +105,10 @@ PShape drawSquareLeft(int longeur,int x,int y,int nbSquars,int txtInt){
   PShape shape = createShape();
   for (int j=0; j<(longeur*nbSquars);j+=longeur){
       fill(0,100,0);
-      square(-longeur-j+x, y, longeur);
+      pushMatrix();
+      translate(-longeur-j+x, y, 0); 
+      box(longeur);
+      popMatrix();
       fill(255,0,0);
       textSize(longeur/3);
       text(""+txtInt++,x-j-longeur+longeur/5, y+longeur/2); 
@@ -104,7 +120,10 @@ PShape drawSquareDown(int longeur,int x,int y,int nbSquars,int txtInt){
   PShape shape = createShape();
   for (int j=0; j<(longeur*nbSquars);j+=longeur){
       fill(0,100,0);
-      square(x, y+j, longeur);
+      pushMatrix();
+      translate(x, y+j, 0); 
+      box(longeur);
+      popMatrix();
       fill(255,0,0);
       textSize(longeur/3);
       text(""+txtInt++,x+longeur/5, y+j+longeur/2); 
@@ -116,7 +135,10 @@ PShape drawSquareUp(int longeur,int x,int y,int nbSquars,int txtInt){
   PShape shape = createShape();
   for (int j=0; j<(longeur*nbSquars);j+=longeur){
       fill(0,100,0);
-      square(x, y-j-longeur, longeur);
+      pushMatrix();
+      translate(x, y-j-longeur, 0); 
+      box(longeur);
+      popMatrix();
       fill(255,0,0);
       textSize(longeur/3);
       text(""+txtInt++,x+longeur/5, y-j-longeur+longeur/2); 
