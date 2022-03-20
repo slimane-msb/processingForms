@@ -21,8 +21,7 @@ void setup(){
     numbersJ[i] = i;
   }
  
-   
-
+  
 }
 
 
@@ -40,7 +39,8 @@ void draw() {
   rotateZ(PI*(mY));
   
   //draw S shape
-  makeShapeSFinal(10);
+  
+ makeShapeSFinal(150);
 
    
   

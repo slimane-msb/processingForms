@@ -48,16 +48,21 @@ PShape makeShapeSFinal(int surface){
     if      (mouseButton == LEFT)   zoom += inc+70;
     else if (mouseButton == RIGHT)  zoom -= inc+70;
     int longueur =zoom/10;
-  for (int i=surface; i>=0;i--){
+    int j=0;
+  for (int i=surface; i>=0;i-=4){
       pushMatrix();
-      translate(0,0,longueur);
+      translate(0,0,longueur*j++);
       shape(makeShapeS(longueur,i,mouseX,mouseY));
       popMatrix();
   }
   //shape(makeShapeS(longueur,surface+150,mouseX,mouseY));
   //pushMatrix();
   //translate(0,0,longueur);
-  //shape(makeShapeS(longueur,surface+150-1,mouseX,mouseY));
+  //shape(makeShapeS(longueur,surface+150-4,mouseX,mouseY));
+  //popMatrix();
+  //pushMatrix();
+  //translate(0,0,longueur*2);
+  //shape(makeShapeS(longueur,surface+150-8,mouseX,mouseY));
   //popMatrix();
    
   return shape;
