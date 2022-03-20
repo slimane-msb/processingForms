@@ -84,68 +84,32 @@ color getColor(int n) {
   }
 }
 
-// fonction utilitaire 
-// list de squars vers la droite
-PShape drawSquareRight(int longeur,int x,int y,int nbSquars,int txtInt){
-  PShape shape = createShape();
-  for (int j=0; j<(longeur*nbSquars);j+=longeur){
-      fill(0,100,0);
-      pushMatrix();
-      translate(j+x, y, 0); 
-      box(longeur);
-      popMatrix();
-      fill(255,0,0);
-      textSize(longeur/3);
-      text(""+txtInt++,x+j+longeur/5, y+longeur/2); 
-    }
-  return shape;
-}
+// fonction utilitaire
 // list de squars vers la gauche
-PShape drawSquareLeft(int longeur,int x,int y,int nbSquars,int txtInt){
+PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int txtInt){
   PShape shape = createShape();
-  for (int j=0; j<(longeur*nbSquars);j+=longeur){
+  for (int j=0; j<(longueur*nbSquares);j+=longueur){
       fill(0,100,0);
       pushMatrix();
-      translate(-longeur-j+x, y, 0); 
-      box(longeur);
-      popMatrix();
-      fill(255,0,0);
-      textSize(longeur/3);
-      text(""+txtInt++,x-j-longeur+longeur/5, y+longeur/2); 
-    }
-  return shape;
-}
-// list de squars vers la bas
-PShape drawSquareDown(int longeur,int x,int y,int nbSquars,int txtInt){
-  PShape shape = createShape();
-  for (int j=0; j<(longeur*nbSquars);j+=longeur){
-      fill(0,100,0);
-      pushMatrix();
-      translate(x, y+j, 0); 
-      box(longeur);
-      popMatrix();
-      fill(255,0,0);
-      textSize(longeur/3);
-      text(""+txtInt++,x+longeur/5, y+j+longeur/2); 
-    }
-  return shape;
-}
-// list de squars vers la haut
-PShape drawSquareUp(int longeur,int x,int y,int nbSquars,int txtInt){
-  PShape shape = createShape();
-  for (int j=0; j<(longeur*nbSquars);j+=longeur){
-      fill(0,100,0);
-      pushMatrix();
-      translate(x, y-j-longeur, 0); 
-      box(longeur);
-      popMatrix();
-      fill(255,0,0);
-      textSize(longeur/3);
-      text(""+txtInt++,x+longeur/5, y-j-longeur+longeur/2); 
-    }
-  return shape;
-}
+      if(direction == 0) {translate(-longueur-j+x, y, 0);}
+      else if(direction == 1) {translate(x, y-j-longueur, 0);}
+      else if(direction == 2) {translate(j+x, y, 0);}
+      else {translate(x, y+j, 0);}
 
+      box(longueur);
+      popMatrix();
+      fill(255,0,0);
+      textSize(longueur/3);
+      
+      if(direction == 0) {text(""+txtInt++,x-j-longueur+longueur/5, y+longueur/2);}
+      else if(direction == 1) {text(""+txtInt++,x+longueur/5, y-j-longueur+longueur/2);}
+      else if(direction == 2) {text(""+txtInt++,x+j+longueur/5, y+longueur/2);}
+      else {text(""+txtInt++,x+longueur/5, y+j+longueur/2);}
+      
+  }
+      
+  return shape;
+}
 
 PShape makeShapeSFinal(int surface){
   PShape shape = createShape();
@@ -153,68 +117,52 @@ PShape makeShapeSFinal(int surface){
   if (mousePressed)
     if      (mouseButton == LEFT)   zoom += inc;
     else if (mouseButton == RIGHT)  zoom -= inc;
-    int longeur =zoom/10;
+    int longueur =zoom/10;
   for (int i=0; i<surface;i++){
     pushMatrix();
-    translate(0,0,i*longeur);
-    shape(makeShapeS(longeur,i,mouseX,mouseY));
+    translate(0,0,i*longueur);
+    shape(makeShapeS(longueur,i,mouseX,mouseY));
     popMatrix();
   }
   return shape;
   
 }
 
-PShape makeShapeS(int longeur,int surface, int centerX,int centerY) {
+PShape makeShapeS(int longueur,int surface, int centerX,int centerY) {
   PShape shape = createShape();
   beginShape();
     // 1. structure 2d
     // draw the center
-    drawSquareRight(longeur,centerX,centerY,1,0);
-    drawSquareDown(longeur,centerX+longeur,centerY,2,1);
+    drawSquares(2, longueur,centerX,centerY,1,0);
+    drawSquares(3, longueur,centerX+longueur,centerY,2,1);
     
     beginShape();
     int j=2;
     int caseNb=3;
     int tourNb= 0;
     
-    
     for (int i=0; i<surface-3;i++){
         print("\n i"+i+"\n j"+j+"\n caseNb"+caseNb+"\n tourNb"+tourNb+"\n\n");
         //go left
         if (i%4==0){
-          drawSquareLeft(longeur,centerX+longeur*(tourNb+1),centerY+longeur*(tourNb+1),j,caseNb);
-          caseNb+=j;
-          print("LEFT");
-          
+          drawSquares(i%4, longueur,centerX+longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
+        } else if (i%4==1){
+          drawSquares(i%4, longueur,centerX-longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
+        } else if (i%4==2){
+          drawSquares(i%4, longueur,centerX-longueur*(tourNb),centerY-longueur*(tourNb+1),j,caseNb);
+        } else if (i%4==3){
+          drawSquares(i%4, longueur,centerX+longueur*(tourNb+2),centerY-longueur*(tourNb),j,caseNb);
+          tourNb++; //Lap completed
         }
-        // draw up
-        if (i%4==1){
-          drawSquareUp(longeur,centerX-longeur*(tourNb+1),centerY+longeur*(tourNb+1),j,caseNb);
-          caseNb+=j;
-        }
-        // draw right
-        if (i%4==2){
-          drawSquareRight(longeur,centerX-longeur*(tourNb),centerY-longeur*(tourNb+1),j,caseNb);
-          caseNb+=j;
-        }
-        // draw down
-        if (i%4==3){
-          drawSquareDown(longeur,centerX+longeur*(tourNb+2),centerY-longeur*(tourNb),j,caseNb);
-          caseNb+=j;
-          // tour completed
-          tourNb++;
-        }
+        caseNb+=j;
         if(i%2==1){
           j++;
         }
       
     }
     endShape();
-    
-  
-    
     // 2. structure 3d
-    // 3. avec shedar
+    // 3. avec shader
   endShape();
   
   return shape;
@@ -266,94 +214,3 @@ PShape makeShapeJ(int[] numbers) {
   }
     return structure;
 }
-
-
-
-
-
-
-
-
-
-
-
-//void setup(){
-//  size(800,800,P3D);
- 
-//}
-
-//void draw(){
-//  lights();
-//  background(0);
-//  float mX= -(mouseX-1000.0)/500.0;
-//  float mY= -(mouseY-1000.0)/500.0;
-//  print(mX+"\n");
-//  rotateX(PI*(mX));
-//  rotateY(PI*(mY));
-  
-//  //use tp last my work to fix the camera 
-//   for (int i=0 ;i<10;i++){
-//    pushMatrix();
-//    translate(200+i*50, 192, 0); 
-//    box(50);
-//    popMatrix();
-//  }
- 
-//}
-
-/**
- * Move Eye. 
- * by Simon Greenwold.
- * 
- * The camera lifts up (controlled by mouseY) while looking at the same point.
-// */
-
-//void setup() {
-//  size(1000, 1000, P3D);
-//  //fill(204);
-//}
-
-//void draw() {
-//  lights();
-//  background(0);
-  
-//  // Change height of the camera with mouseY
-//  //camera(mouseX/3, mouseY*2, 200.0, // eyeX, eyeY, eyeZ
-//  //       0.0, 0.0, 0.0, // centerX, centerY, centerZ
-//  //       0.0, 1.0, 0.0); // upX, upY, upZ
-//  translate(400,400);
-  
-//  float mX= -(mouseX-1000.0)/500.0;
-//  float mY= -(mouseY-1000.0)/500.0;
-//  print(mX+"\n");
-//  rotateX(PI*(mX));
-//  rotateY(PI*(mY));
-  
-  
-//  //noStroke();
-//  box(90);
-//  //stroke(255);
-//  //line(-100, 0, 0, 100, 0, 0);
-//  //line(0, -100, 0, 0, 100, 0);
-//  //line(0, 0, -100, 0, 0, 100);
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-// move eyes
-/**
- * Move Eye. 
- * by Simon Greenwold.
- * 
- * The camera lifts up (controlled by mouseY) while looking at the same point.
- */
