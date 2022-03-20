@@ -3,18 +3,18 @@ final static byte inc = 2;
 
 int ELEMENT_SIZE = 10;
 
-int[] numbersS;
+// int[] numbersS;
 int[] numbersJ;
-ArrayList<Integer> listS = new ArrayList<Integer>();
+// ArrayList<Integer> listS = new ArrayList<Integer>();
 void setup(){
 
   size(1280, 720, P3D);
   smooth();
   rectMode(CENTER);
-  numbersS = new int[100];
-  for(int i=0; i<100; i++) {
-    listS.add(i);
-  }
+  // numbersS = new int[100];
+  // for(int i=0; i<100; i++) {
+  //   listS.add(i);
+  // }
   
   numbersJ = new int[100];
   for(int i=0; i<100; i++) {

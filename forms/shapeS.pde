@@ -5,36 +5,47 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
   for (int j=0; j<(longueur*nbSquares);j+=longueur){
     fill(0,100,0);
     pushMatrix();
-    if(direction == 0) {
-      translate(-longueur-j+x, y, 0);
-    }
-    else if(direction == 1) {
-      translate(x, y-j-longueur, 0);
-    }
-    else if(direction == 2) {
-      translate(j+x, y, 0);
-    }
-    else {
-      translate(x, y+j, 0);
-    }
+    
+    switch(direction){
+ 
+     case 0: 
+         translate(-longueur-j+x, y, 0);
+         break;
+ 
+     case 1:
+         translate(x, y-j-longueur, 0);
+         break;
+ 
+     case 2:
+         translate(j+x, y, 0);
+         break;
+     default:
+         translate(x, y+j, 0);
+         break;
+   }
 
     box(longueur);
     popMatrix();
     fill(255,0,0);
     textSize(longueur/3);
-    
-    if(direction == 0) {
-      text(""+txtInt++,x-j-longueur+longueur/5, y+longueur/2,longueur/2);
-    }
-    else if(direction == 1) {
-      text(""+txtInt++,x+longueur/5, y-j-longueur+longueur/2,longueur/2);
-    }
-    else if(direction == 2) 
-    {text(""+txtInt++,x+j+longueur/5, y+longueur/2,longueur/2);
-    }
-    else 
-    {text(""+txtInt++,x+longueur/5, y+j+longueur/2,longueur/2);
-    }
+       
+    switch(direction){
+ 
+     case 0: 
+         text(""+txtInt++,x-j-longueur+longueur/5, y+longueur/2,longueur/2);
+         break;
+ 
+     case 1:
+         text(""+txtInt++,x+longueur/5, y-j-longueur+longueur/2,longueur/2);
+         break;
+ 
+     case 2:
+         text(""+txtInt++,x+j+longueur/5, y+longueur/2,longueur/2);
+         break;
+     default:
+         text(""+txtInt++,x+longueur/5, y+j+longueur/2,longueur/2);
+         break;
+   }
       
   }
       
@@ -43,42 +54,36 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
 
 PShape makeShapeSFinal(int surface){
   PShape shape = createShape();
-  background(200);
-  if (mousePressed)
-    if      (mouseButton == LEFT)   zoom += inc+70;
-    else if (mouseButton == RIGHT)  zoom -= inc+70;
-    int longueur =zoom/10;
-    int j=0;
+  //background(200);
+  //if (mousePressed)
+  //  if      (mouseButton == LEFT)   zoom += inc+70;
+  //  else if (mouseButton == RIGHT)  zoom -= inc+70;
+  //int longueur =zoom/10;
+  int longueur = 10;
+  int j=0;
+ 
   for (int i=surface; i>=0;i-=4){
       pushMatrix();
       translate(0,0,longueur*j++);
-      shape(makeShapeS(longueur,i,mouseX,mouseY));
+      shape(makeShapeS(longueur,i,width/2,height/2));
+      //shape(makeShapeS(longueur,i,mouseX,mouseY));
       popMatrix();
   }
-  //shape(makeShapeS(longueur,surface+150,mouseX,mouseY));
-  //pushMatrix();
-  //translate(0,0,longueur);
-  //shape(makeShapeS(longueur,surface+150-4,mouseX,mouseY));
-  //popMatrix();
-  //pushMatrix();
-  //translate(0,0,longueur*2);
-  //shape(makeShapeS(longueur,surface+150-8,mouseX,mouseY));
-  //popMatrix();
    
   return shape;
   
 }
 
-PShape makeShapeS(int longueur,int surface, int centerX,int centerY) {
+PShape makeShapeS(int longueur,int quarterTour, int centerX,int centerY) {
   PShape shape = createShape();
   beginShape();
     // 1. structure 2d
     // draw the center
-    if (surface==0){
+    if (quarterTour==0){
       drawSquares(2, longueur,centerX,centerY,1,0);
       return shape;
     }
-    if (surface==1){
+    if (quarterTour==1){
       drawSquares(3, longueur,centerX+longueur,centerY,2,1);
       return shape;
     }
@@ -89,7 +94,7 @@ PShape makeShapeS(int longueur,int surface, int centerX,int centerY) {
     int caseNb=3;
     int tourNb= 0;
     
-    for (int i=0; i<surface-3;i++){
+    for (int i=0; i<quarterTour-3;i++){
        
         //go left
         if (i%4==0){
