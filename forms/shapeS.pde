@@ -27,23 +27,23 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
     box(longueur);
     popMatrix();
     fill(255,0,0);
-    textSize(longueur/3);
+    textSize(longueur/3.0);
        
     switch(direction){
  
      case 0: 
-         text(""+txtInt++,x-j-longueur+longueur/5, y+longueur/2,longueur/2);
+         text(""+txtInt++,x-j-longueur+longueur/5.0, y+longueur/2.0,longueur/2.0);
          break;
  
      case 1:
-         text(""+txtInt++,x+longueur/5, y-j-longueur+longueur/2,longueur/2);
+         text(""+txtInt++,x+longueur/5.0, y-j-longueur+longueur/2.0,longueur/2.0);
          break;
  
      case 2:
-         text(""+txtInt++,x+j+longueur/5, y+longueur/2,longueur/2);
+         text(""+txtInt++,x+j+longueur/5.0, y+longueur/2.0,longueur/2.0);
          break;
      default:
-         text(""+txtInt++,x+longueur/5, y+j+longueur/2,longueur/2);
+         text(""+txtInt++,x+longueur/5.0, y+j+longueur/2.0,longueur/2.0);
          break;
    }
       
@@ -54,19 +54,23 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
 
 PShape makeShapeSMotion(){
   PShape shape = createShape();
-    // rotate l'objet pour mieux voir ce que ca donne 
+  // rotate l'objet pour mieux voir ce que ca donne 
   lights();
   background(0);
-  float mX= -(mouseX-1000.0)/500.0;
-  float mY= -(mouseY-1000.0)/500.0;
-  translate(mouseX,mouseY);
-  rotateX(PI*(mX));
-  rotateZ(PI*(mY));
+  //float mX= -(frameCount-1000.0)/500.0;
+  //float mY= -(mouseY-1000.0)/500.0;
   
-  //draw S shape
+  translate(width/2,height/2); 
+
   
- makeShapeSFinal(150);
-   
+  
+  rotateX(PI*2*cos(frameCount/20.0));
+  //rotateZ(PI*(mY));
+  pushMatrix();
+  
+  popMatrix();
+  makeShapeSFinal(150);
+  
   return shape;
   
 }
@@ -79,13 +83,14 @@ PShape makeShapeSFinal(int surface){
   //  if      (mouseButton == LEFT)   zoom += inc+70;
   //  else if (mouseButton == RIGHT)  zoom -= inc+70;
   //int longueur =zoom/10;
-  int longueur = 10;
+  int longueur = 5;
   int j=0;
  
   for (int i=surface; i>=0;i-=4){
       pushMatrix();
       translate(0,0,longueur*j++);
-      shape(makeShapeS(longueur,i,width/2,height/2));
+      shape(makeShapeS(longueur,i,0,0));
+      //shape(makeShapeS(longueur,i,width/2,height/2));
       //shape(makeShapeS(longueur,i,mouseX,mouseY));
       popMatrix();
   }
@@ -138,5 +143,17 @@ PShape makeShapeS(int longueur,int quarterTour, int centerX,int centerY) {
     // 3. avec shader
   endShape();
   
+  return shape;
+}
+
+
+
+PShape drawPlan() {
+  PShape shape = createShape();
+  for (int i=0 ;i<width;i+=10){
+    fill(0,0,255);
+    line(i, 0, i, height);
+    line(0,i,width,i);
+  }
   return shape;
 }

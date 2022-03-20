@@ -2,26 +2,20 @@ int zoom = 30;
 final static byte inc = 2;
 
 int ELEMENT_SIZE = 10;
-
-// int[] numbersS;
 int[] numbersJ;
-// ArrayList<Integer> listS = new ArrayList<Integer>();
+
 void setup(){
 
   size(1280, 720, P3D);
   smooth();
   rectMode(CENTER);
-  // numbersS = new int[100];
-  // for(int i=0; i<100; i++) {
-  //   listS.add(i);
-  // }
-  
+
   numbersJ = new int[100];
   for(int i=0; i<100; i++) {
     numbersJ[i] = i;
   }
  
-  
+  //frameRate(100);
 }
 
 
@@ -32,6 +26,7 @@ void draw() {
 
   //shape(makeShapeJ(numbersJ));
   makeShapeSMotion();
+
   
   //testingCounter++; //debugging
 }
