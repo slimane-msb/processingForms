@@ -115,15 +115,21 @@ PShape makeShapeSFinal(int surface){
   PShape shape = createShape();
   background(200);
   if (mousePressed)
-    if      (mouseButton == LEFT)   zoom += inc;
-    else if (mouseButton == RIGHT)  zoom -= inc;
+    if      (mouseButton == LEFT)   zoom += inc+70;
+    else if (mouseButton == RIGHT)  zoom -= inc+70;
     int longueur =zoom/10;
-  for (int i=0; i<surface;i++){
-    pushMatrix();
-    translate(0,0,i*longueur);
-    shape(makeShapeS(longueur,i,mouseX,mouseY));
-    popMatrix();
+  for (int i=surface+150; i>=0;i--){
+      pushMatrix();
+      translate(0,0,longueur);
+      shape(makeShapeS(longueur,i,mouseX,mouseY));
+      popMatrix();
   }
+  //shape(makeShapeS(longueur,surface+150,mouseX,mouseY));
+  //pushMatrix();
+  //translate(0,0,longueur);
+  //shape(makeShapeS(longueur,surface+150-1,mouseX,mouseY));
+  //popMatrix();
+   
   return shape;
   
 }
@@ -133,16 +139,23 @@ PShape makeShapeS(int longueur,int surface, int centerX,int centerY) {
   beginShape();
     // 1. structure 2d
     // draw the center
+    if (surface==0){
+      drawSquares(2, longueur,centerX,centerY,1,0);
+      return shape;
+    }
+    if (surface==1){
+      drawSquares(3, longueur,centerX+longueur,centerY,2,1);
+      return shape;
+    }
     drawSquares(2, longueur,centerX,centerY,1,0);
     drawSquares(3, longueur,centerX+longueur,centerY,2,1);
-    
     beginShape();
     int j=2;
     int caseNb=3;
     int tourNb= 0;
     
     for (int i=0; i<surface-3;i++){
-        print("\n i"+i+"\n j"+j+"\n caseNb"+caseNb+"\n tourNb"+tourNb+"\n\n");
+       
         //go left
         if (i%4==0){
           drawSquares(i%4, longueur,centerX+longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
