@@ -153,7 +153,13 @@ PShape makeShapeSFinal(int surface){
   if (mousePressed)
     if      (mouseButton == LEFT)   zoom += inc;
     else if (mouseButton == RIGHT)  zoom -= inc;
-  shape(makeShapeS(zoom,surface,mouseX,mouseY));
+    int longeur =zoom/10;
+  for (int i=0; i<surface;i++){
+    pushMatrix();
+    translate(0,0,i*longeur);
+    shape(makeShapeS(longeur,i,mouseX,mouseY));
+    popMatrix();
+  }
   return shape;
   
 }
@@ -260,3 +266,94 @@ PShape makeShapeJ(int[] numbers) {
   }
     return structure;
 }
+
+
+
+
+
+
+
+
+
+
+
+//void setup(){
+//  size(800,800,P3D);
+ 
+//}
+
+//void draw(){
+//  lights();
+//  background(0);
+//  float mX= -(mouseX-1000.0)/500.0;
+//  float mY= -(mouseY-1000.0)/500.0;
+//  print(mX+"\n");
+//  rotateX(PI*(mX));
+//  rotateY(PI*(mY));
+  
+//  //use tp last my work to fix the camera 
+//   for (int i=0 ;i<10;i++){
+//    pushMatrix();
+//    translate(200+i*50, 192, 0); 
+//    box(50);
+//    popMatrix();
+//  }
+ 
+//}
+
+/**
+ * Move Eye. 
+ * by Simon Greenwold.
+ * 
+ * The camera lifts up (controlled by mouseY) while looking at the same point.
+// */
+
+//void setup() {
+//  size(1000, 1000, P3D);
+//  //fill(204);
+//}
+
+//void draw() {
+//  lights();
+//  background(0);
+  
+//  // Change height of the camera with mouseY
+//  //camera(mouseX/3, mouseY*2, 200.0, // eyeX, eyeY, eyeZ
+//  //       0.0, 0.0, 0.0, // centerX, centerY, centerZ
+//  //       0.0, 1.0, 0.0); // upX, upY, upZ
+//  translate(400,400);
+  
+//  float mX= -(mouseX-1000.0)/500.0;
+//  float mY= -(mouseY-1000.0)/500.0;
+//  print(mX+"\n");
+//  rotateX(PI*(mX));
+//  rotateY(PI*(mY));
+  
+  
+//  //noStroke();
+//  box(90);
+//  //stroke(255);
+//  //line(-100, 0, 0, 100, 0, 0);
+//  //line(0, -100, 0, 0, 100, 0);
+//  //line(0, 0, -100, 0, 0, 100);
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// move eyes
+/**
+ * Move Eye. 
+ * by Simon Greenwold.
+ * 
+ * The camera lifts up (controlled by mouseY) while looking at the same point.
+ */
