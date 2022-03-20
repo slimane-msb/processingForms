@@ -40,7 +40,7 @@ void draw() {
   rotateZ(PI*(mY));
   
   //draw S shape
-  makeShapeSFinal(20);
+  makeShapeSFinal(10);
 
    
   
