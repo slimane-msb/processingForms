@@ -23,14 +23,13 @@ void setup(){
 
 void draw() {
   
-
-  //shape(makeShapeJ(numbersJ));
   makeShapeSMotion();
+  //shape(makeShapeJ(numbersJ));
+  
 
   
   //testingCounter++; //debugging
 }
-
 
 
 int sumDivisors(int n) {

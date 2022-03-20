@@ -1,7 +1,9 @@
+int nbCaseInt=0;
 // fonction utilitaire
 // list de squares vers la gauche
 PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int txtInt){
   PShape shape = createShape();
+  
   for (int j=0; j<(longueur*nbSquares);j+=longueur){
     fill(0,100,0);
     pushMatrix();
@@ -16,15 +18,18 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
          translate(x, y-j-longueur, 0);
          break;
  
-     case 2:
+     case 2:  
+         fill(0,0,255);
          translate(j+x, y, 0);
          break;
      default:
          translate(x, y+j, 0);
          break;
    }
-
+    fill(getColorTmp(nbCaseInt));
     box(longueur);
+    nbCaseInt++;
+    
     popMatrix();
     fill(255,0,0);
     textSize(longueur/3.0);
@@ -57,19 +62,15 @@ PShape makeShapeSMotion(){
   // rotate l'objet pour mieux voir ce que ca donne 
   lights();
   background(0);
-  //float mX= -(frameCount-1000.0)/500.0;
-  //float mY= -(mouseY-1000.0)/500.0;
   
-  translate(width/2,height/2); 
-
+  translate(width/2,height/2,200); 
+  rotateX(-PI/2);
+  camera( mouseY/4, mouseX/4-200, -100,
+          0, 0,   0, 
+           0.0,  0.0,  1.0);
   
-  
-  rotateX(PI*2*cos(frameCount/20.0));
-  //rotateZ(PI*(mY));
-  pushMatrix();
-  
-  popMatrix();
-  makeShapeSFinal(150);
+  makeShapeSFinal(30);
+  nbCaseInt=0;
   
   return shape;
   
@@ -78,41 +79,31 @@ PShape makeShapeSMotion(){
 
 PShape makeShapeSFinal(int surface){
   PShape shape = createShape();
-  //background(200);
-  //if (mousePressed)
-  //  if      (mouseButton == LEFT)   zoom += inc+70;
-  //  else if (mouseButton == RIGHT)  zoom -= inc+70;
-  //int longueur =zoom/10;
   int longueur = 5;
   int j=0;
- 
-  for (int i=surface; i>=0;i-=4){
+  for (int i=6; i<surface;i+=4){
       pushMatrix();
       translate(0,0,longueur*j++);
       shape(makeShapeS(longueur,i,0,0));
-      //shape(makeShapeS(longueur,i,width/2,height/2));
-      //shape(makeShapeS(longueur,i,mouseX,mouseY));
       popMatrix();
   }
+
    
   return shape;
   
 }
-
+// un surface en 3D
 PShape makeShapeS(int longueur,int quarterTour, int centerX,int centerY) {
   PShape shape = createShape();
   beginShape();
     // 1. structure 2d
     // draw the center
-    if (quarterTour==0){
+    if (quarterTour<=6){
+      pushMatrix();
+      translate(0,0,-longueur);
       drawSquares(2, longueur,centerX,centerY,1,0);
-      return shape;
+      popMatrix();
     }
-    if (quarterTour==1){
-      drawSquares(3, longueur,centerX+longueur,centerY,2,1);
-      return shape;
-    }
-    drawSquares(2, longueur,centerX,centerY,1,0);
     drawSquares(3, longueur,centerX+longueur,centerY,2,1);
     beginShape();
     int j=2;
@@ -120,18 +111,28 @@ PShape makeShapeS(int longueur,int quarterTour, int centerX,int centerY) {
     int tourNb= 0;
     
     for (int i=0; i<quarterTour-3;i++){
-       
+        if (i==quarterTour-4) j--;
         //go left
-        if (i%4==0){
-          drawSquares(i%4, longueur,centerX+longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
-        } else if (i%4==1){
-          drawSquares(i%4, longueur,centerX-longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
-        } else if (i%4==2){
-          drawSquares(i%4, longueur,centerX-longueur*(tourNb),centerY-longueur*(tourNb+1),j,caseNb);
-        } else if (i%4==3){
-          drawSquares(i%4, longueur,centerX+longueur*(tourNb+2),centerY-longueur*(tourNb),j,caseNb);
-          tourNb++; //Lap completed
-        }
+    int dir=i%4;
+     switch(dir){
+     
+       case 0: 
+           drawSquares(dir, longueur,centerX+longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
+           break;
+     
+       case 1:
+           drawSquares(dir, longueur,centerX-longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
+           break;
+     
+       case 2:
+           drawSquares(dir, longueur,centerX-longueur*(tourNb),centerY-longueur*(tourNb+1),j,caseNb);
+           break;
+       default:
+           drawSquares(dir, longueur,centerX+longueur*(tourNb+2),centerY-longueur*(tourNb),j,caseNb);
+           tourNb++; //Lap completed
+           break;
+   }
+
         caseNb+=j;
         if(i%2==1){
           j++;
@@ -139,7 +140,6 @@ PShape makeShapeS(int longueur,int quarterTour, int centerX,int centerY) {
       
     }
     endShape();
-    // 2. structure 3d
     // 3. avec shader
   endShape();
   
@@ -156,4 +156,11 @@ PShape drawPlan() {
     line(0,i,width,i);
   }
   return shape;
+}
+
+
+
+color getColorTmp(int n) {
+  return color(n/2,255-n/2 ,100+n/5 );
+ 
 }
