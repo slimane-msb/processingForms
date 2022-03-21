@@ -27,10 +27,11 @@ PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int
          translate(x, y+j, 0);
          break;
    }
-    //fill(getColorTmp(nbCaseInt));
-    //box(longueur);
-    squarSample.setFill(getColorTmp(nbCaseInt));
-    shape(squarSample);
+    fill(getColor(nbCaseInt));
+    box(longueur);
+    print(nbCaseInt+"\n");
+    //squarSample.setFill(getColor(nbCaseInt));
+    //shape(squarSample);
     
     
     nbCaseInt++;
@@ -77,7 +78,7 @@ PShape makeShapeSMotion(){
           0, 0,   0, 
            0.0,  0.0,  1.0);
   
-  makeShapeSFinal(60);
+  makeShapeSFinal(100);
   nbCaseInt=0;
   
   return shape;
@@ -168,10 +169,7 @@ PShape drawPlan() {
 
 
 
-color getColorTmp(int n) {
-  return color(n/2,255-n/2 ,100+n/5 );
- 
-}
+
 
 PShape makeSquar(int longueur){
   PShape shape = createShape();
