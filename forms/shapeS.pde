@@ -1,179 +1,176 @@
-int nbCaseInt=0;
-// fonction utilitaire
-// list de squares vers la gauche
-PShape drawSquares(int direction, int longueur, int x, int y, int nbSquares, int txtInt){
-  PShape shape = createShape();
-  PShape squarSample = makeSquar( longueur);
+// =================> variables <================== //
+int caseNumber=0;
+
+// ===========> fonctions utilitaires <============ // 
+
+// dessiner des series de box 
+void dessinerListeDeBox(PShape b, int dir, int lengthBox, int x, int y, int listLength){
+  //PShape shape = createShape();
   
-  for (int j=0; j<(longueur*nbSquares);j+=longueur){
-    fill(0,100,0);
+  for (int j=0; j<(lengthBox*listLength);j+=lengthBox){
     pushMatrix();
-    
-    switch(direction){
- 
-     case 0: 
-         translate(-longueur-j+x, y, 0);
-         break;
- 
-     case 1:
-         translate(x, y-j-longueur, 0);
-         break;
- 
-     case 2:  
-         fill(0,0,255);
-         translate(j+x, y, 0);
-         break;
-     default:
-         translate(x, y+j, 0);
-         break;
-   }
-    fill(getColor(nbCaseInt));
-    box(longueur);
-    print(nbCaseInt+"\n");
-    //squarSample.setFill(getColor(nbCaseInt));
-    //shape(squarSample);
-    
-    
-    nbCaseInt++;
-    
+    PShape bb = myBoxes.getChild(caseNumber);
+      switch(dir){
+       case 0: 
+           bb.translate(-lengthBox-j+x, y, 0);
+           break;
+       case 1:
+           bb.translate(x, y-j-lengthBox, 0);
+           break;
+       case 2:  
+           bb.translate(j+x, y, 0);
+           break;
+       default:
+           bb.translate(x, y+j, 0);
+           break;
+      }
+      b.addChild(bb);
+      caseNumber++;
     popMatrix();
-    fill(255,0,0);
-    textSize(longueur/3.0);
-       
-    switch(direction){
- 
-     case 0: 
-         text(""+txtInt++,x-j-longueur+longueur/5.0, y+longueur/2.0,longueur/2.0);
-         break;
- 
-     case 1:
-         text(""+txtInt++,x+longueur/5.0, y-j-longueur+longueur/2.0,longueur/2.0);
-         break;
- 
-     case 2:
-         text(""+txtInt++,x+j+longueur/5.0, y+longueur/2.0,longueur/2.0);
-         break;
-     default:
-         text(""+txtInt++,x+longueur/5.0, y+j+longueur/2.0,longueur/2.0);
-         break;
-   }
-      
   }
-      
-  return shape;
+ // return shape;
 }
 
-PShape makeShapeSMotion(){
-  PShape shape = createShape();
-  // rotate l'objet pour mieux voir ce que ca donne 
+PShape mainShape(int hauteur){
+  //PShape shape = createShape();
+  caseNumber=0;
+ 
   lights();
   background(0);
-  
-  translate(width/2,height/2,200); 
-  rotateX(-PI/2);
-  //camera( mouseY/4, mouseX/4-200, -100,
-  //        0, 0,   0, 
-  //         0.0,  0.0,  1.0);
-    camera( cos(frameCount)*400/4, mouseX/4-200, -100,
-          0, 0,   0, 
-           0.0,  0.0,  1.0);
-  
-  makeShapeSFinal(100);
-  nbCaseInt=0;
-  
-  return shape;
-  
-}
-
-
-PShape makeShapeSFinal(int surface){
-  PShape shape = createShape();
-  int longueur = 2;
-  int j=0;
-  for (int i=6; i<surface;i+=4){
-      pushMatrix();
-      translate(0,0,longueur*j++);
-      shape(makeShapeS(longueur,i,0,0));
-      popMatrix();
-  }
-
+  pushMatrix();
    
+    PShape shape =shapeSample(hauteur);
+    shape.translate(width/2,height/2,-50); 
+    shape.rotateX(-PI/2);
+    //shape.rotateZ(cos(frameCount/20)*PI);
+   
+    caseNumber=0;
+  popMatrix();
   return shape;
   
 }
-// un surface en 3D
-PShape makeShapeS(int longueur,int quarterTour, int centerX,int centerY) {
-  PShape shape = createShape();
-  beginShape();
-    // 1. structure 2d
-    // draw the center
-    if (quarterTour<=6){
+
+
+PShape shapeSample(int hauteur){
+  PShape shape = createShape(GROUP);
+  int j=0;
+  
+  for (int i=6; i<hauteur;i+=4){
+      //shape.pushMatrix();
+      
+      PShape et = etage(boxSize,i,0,0);
+      et.translate(0,0,boxSize*j++);
+      shape.addChild(et);
+      //shape();
+      //shape.popMatrix();
+  }
+  return shape;
+  
+}
+// un hauteur en 3D
+PShape etage(int lengthBox,int tourNbBy4, int X,int Y) {
+  PShape shape = createShape(GROUP);
+  //beginShape();
+    if (tourNbBy4<=6){
       pushMatrix();
-      translate(0,0,-longueur);
-      drawSquares(2, longueur,centerX,centerY,1,0);
+      translate(0,0,-lengthBox);
+      dessinerListeDeBox(shape, 2, lengthBox,X,Y,1);
       popMatrix();
     }
-    drawSquares(3, longueur,centerX+longueur,centerY,2,1);
-    beginShape();
+    dessinerListeDeBox(shape, 3, lengthBox,X+lengthBox,Y,2);
+    //beginShape();
     int j=2;
     int caseNb=3;
     int tourNb= 0;
     
-    for (int i=0; i<quarterTour-3;i++){
-      if (i==quarterTour-4) j--;
+    for (int i=0; i<tourNbBy4-3;i++){
+      if (i==tourNbBy4-4) j--;
       //go left
       int dir=i%4;
        switch(dir){
        
          case 0: 
-             drawSquares(dir, longueur,centerX+longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
+             dessinerListeDeBox(shape, dir, lengthBox,X+lengthBox*(tourNb+1),Y+lengthBox*(tourNb+1),j);
              break;
        
          case 1:
-             drawSquares(dir, longueur,centerX-longueur*(tourNb+1),centerY+longueur*(tourNb+1),j,caseNb);
+             dessinerListeDeBox(shape, dir, lengthBox,X-lengthBox*(tourNb+1),Y+lengthBox*(tourNb+1),j);
              break;
        
          case 2:
-             drawSquares(dir, longueur,centerX-longueur*(tourNb),centerY-longueur*(tourNb+1),j,caseNb);
+             dessinerListeDeBox(shape, dir, lengthBox,X-lengthBox*(tourNb),Y-lengthBox*(tourNb+1),j);
              break;
          default:
-             drawSquares(dir, longueur,centerX+longueur*(tourNb+2),centerY-longueur*(tourNb),j,caseNb);
-             tourNb++; //Lap completed
+             dessinerListeDeBox(shape, dir, lengthBox,X+lengthBox*(tourNb+2),Y-lengthBox*(tourNb),j);
+             tourNb++; 
              break;
        }
-  
           caseNb+=j;
           if(i%2==1){
             j++;
           }
       
     }
-    endShape();
-    // 3. avec shader
-  endShape();
+    //endShape();
+  //endShape();
+  
+  // shader
+  // box.attrib("varname",name);
+  // shader.set(c); look at last tp how they work 
   
   return shape;
 }
 
 
 
-PShape drawPlan() {
-  PShape shape = createShape();
-  for (int i=0 ;i<width;i+=10){
-    fill(0,0,255);
-    line(i, 0, i, height);
-    line(0,i,width,i);
-  }
-  return shape;
-}
 
+// return a box with a number on it
 
+PShape vertexBox(int lengthBox,PGraphics pg,int nb){
+ PShape res = createShape();
+ pushMatrix();
+   res.translate(-lengthBox/2,-lengthBox/2,-lengthBox/2);
+   res.beginShape(QUADS);
+      //behind
+      int x=0;
+      int y=0;
+      if (nb<50){
+        x = (nb%10)*20;
+        y = (nb/10)*20;
+        res.texture(pg);
+      }
+      res.vertex(0, 0,0,x,y);
+      res.vertex(lengthBox,0,0,x+20,y);
+      res.vertex(lengthBox,lengthBox,0,x+20,y+20);
+      res.vertex(0,lengthBox,0,x,y+20  );
+      //front
+      res.vertex(0, 0,lengthBox,x,y);
+      res.vertex(lengthBox,0,lengthBox,x+20,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(0,lengthBox,lengthBox,x,y+20 );
+      //right
+      res.vertex(lengthBox, 0,0,x,y);
+      res.vertex(lengthBox,lengthBox,0,x+20,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(lengthBox, 0,lengthBox,x,y+20  );
+       //left
+      res.vertex(0, 0,0,x,y);
+      res.vertex(0,lengthBox,0,x+20,y);
+      res.vertex(0,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(0, 0,lengthBox,x,y+20 );
+      //up
+      res.vertex(0, 0,0,x,y);
+      res.vertex(lengthBox,0,0,x+20,y);
+      res.vertex(lengthBox,0,lengthBox,x+20,y+20);
+      res.vertex(0, 0,lengthBox,x,y+20);
+      //down
+      res.vertex(0, lengthBox,0,x,y);
+      res.vertex(lengthBox,lengthBox,x+20,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(0, lengthBox,lengthBox,x,y+20);
+      
+    res.endShape();
+  popMatrix();
+  return res;
 
-
-
-PShape makeSquar(int longueur){
-  PShape shape = createShape();
-  box(longueur);
-  return shape;
-  
 }

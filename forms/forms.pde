@@ -1,21 +1,65 @@
 int zoom = 30;
-final static byte inc = 2;
+PGraphics pg;
+PShape myBoxes;
+int boxSize =15;
+int hauteur=40;
 
-int ELEMENT_SIZE = 10;
-int[] numbersJ;
+//F(X)
+int a=1,b=1,c=1;
+int a2=1,b2=1,c2=1;
+
+// chader
+PShader monProgrammeShader;
+
+//main shapes
+PShape pyr1;
+PShape pyr2;
 
 void setup(){
-
   size(1280, 720, P3D);
-  smooth();
-  rectMode(CENTER);
+  // shader
+  monProgrammeShader = 
+  loadShader("myFragmentShader.glsl", 
+             "myVertexShader.glsl"  );
+  // set up graphics 
+  pg = createGraphics(500,500);
+  pg.beginDraw();
+    pg.background(255);
+    for (int j=0 ; j<10;j++){
+      for (int i=0 ; i<10;i++){
+        
+        pg.fill(getColor(f(i)));//testing
+        pg.rect(i*20,j*20+20,20,20);
+        
+        pg.fill(0);
+        pg.text(j*10+i,i*20+4,j*20+20-4);
+        
+      }
+    }
+  pg.endDraw();
 
-  numbersJ = new int[100];
-  for(int i=0; i<100; i++) {
-    numbersJ[i] = i;
-  }
+  // start list boxes
   
-  print(sumDivisors(6));
+  myBoxes=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes.addChild(ps);
+    myBoxes.getChild(i).setFill(getColor(f(i)));
+  }
+ 
+  pyr1 = mainShape(hauteur);
+  //pyr2 = mainShape(hauteur);
+
+  // create the shape 
+  //pushMatrix();
+  //  translate(200,2000);
+  //  mainShape(hauteur);   
+  //popMatrix();
+  
+  //pushMatrix();
+  //  translate(10,10);
+  //  mainShape(hauteur);
+  //popMatrix();
 
 }
 
@@ -23,53 +67,225 @@ void setup(){
 
 
 void draw() {
+  //shader
+  //shader(monProgrammeShader);
+    //shape(pyr1);
+    //shape(myBoxes);
+  //resetShader();
+  //shader(monProgrammeShader);
+    pushMatrix();
+      translate(10,10);
+      //pyr2 = mainShape(hauteur);
+      shape(pyr1);
+    popMatrix();
+    
+    pushMatrix();
+      //translate(50,100);
+      rotateY(cos(frameCount/20)*PI);
+      shape(pyr1);
+    popMatrix();
+  //resetShader();
   
-  makeShapeSMotion();
-  //shape(makeShapeJ(numbersJ));
-
+  PShape txt = botoun();
+  shape(txt);
+  //image(pg,100,100,300,300);
 }
 
 
 
 
-int sumDivisors(int num)
+int sommeDesDeviseur(int n)
 {
-    int result = 0;
-    if(num == 1) return result;  
-    for (int i=2; i<=sqrt(num); i++){  
-        if (num%i==0){
-            if (i==(num/i))
-                result += i;
+    int res = 0;
+    if(n == 1) return res;  
+    for (int i=2; i<=sqrt(n); i++){  
+        if (n%i==0){
+            if (i==(n/i))
+                res += i;
             else
-                result += (i + num/i);
+                res += (i + n/i);
         }
     }
-    return (result + 1 + num);
+    return (res + 1 + n);
 }
 
 
 color getColor(int n) {
-  int sd = sumDivisors(n) - n; //Substract n for better definition of perfect number ..
+  int sd = sommeDesDeviseur(n) - n; 
   
   if(sd == 1) { //Prime 
-    return color(255, 0, 0);
-  } else if(sd == n) { //Perfect
-    print("blue\n");
-    return color(0, 0, 255);
+    return color(230, 0, 0);
+  } else if(sd == n) { //PerfectmyBoxes
+    return color(0, 0, 212);
   } else if(sd < n) { //Deficient
-    return color(0, 255, 0);
+    return color(0, 225, 0);
   } else { //Abundant
-    return color(0, 255, 255);
+    return color(0, 221, 212);
   }
 }
 
-// code J
-//int sumDivisors(int n) {
-//  int s = 0;
-//  for(int i=0; i<pow(n, 1/2); i++) {
-//    if((float(n)/float(i))%1 == 0) {s += i;}
-//  }
-//  return s;
-//}
 
-// code S
+
+
+
+PShape botoun(){
+  float x=width/1.3;
+  PShape res = createShape();
+  pushMatrix();
+    pushMatrix();
+      translate(10,50);
+      textSize(35);
+      text("f(x)="+a+"x2+"+b+"x+"+c,10,10);
+    popMatrix();
+    translate(x,50);
+    text("f(x)="+a2+"x2+"+b2+"x+"+c2,10,10);
+  popMatrix();
+  
+  
+  // a up
+  fill(0, 122, 0);
+  rect(80, 20, 20, 15);
+  
+  // a down
+  fill(0, 122, 0);
+  rect(80, 65, 20, 15);
+  
+  // b up
+  fill(0, 122, 0);
+  rect(80+60, 20, 20, 15);
+  
+  // b down
+  fill(0, 122, 0);
+  rect(80+60, 65, 20, 15);
+  
+  // c up
+  fill(0, 122, 0);
+  rect(80+120, 20, 20, 15);
+  
+  // c down
+  fill(0, 122, 0);
+  rect(80+120, 65, 20, 15);
+
+  
+  
+  
+  // f(x)2
+  
+  // a up
+  fill(0, 122, 0);
+  rect(x+80, 20, 20, 15);
+  
+  // a down
+  fill(0, 122, 0);
+  rect(x+80, 65, 20, 15);
+  
+  // b up
+  fill(0, 122, 0);
+  rect(x+80+60, 20, 20, 15);
+  
+  // b down
+  fill(0, 122, 0);
+  rect(x+80+60, 65, 20, 15);
+  
+  // c up
+  fill(0, 122, 0);
+  rect(x+80+120, 20, 20, 15);
+  
+  // c down
+  fill(0, 122, 0);
+  rect(x+80+120, 65, 20, 15);
+  
+    // hauteur ++
+  fill(0, 122, 0);
+  triangle(width/2, 5, width/2-10, 20, width/2+10, 20);
+
+
+  // hauteur --
+  fill(0, 122, 0);
+  triangle(width/2, 40, width/2-10, 25, width/2+10, 25);
+
+  
+  return res;
+  
+}
+
+
+
+void mouseClicked(){
+  float x=width/1.3;
+   if (mouseX >= 80 && mouseX <= 80+20 && 
+      mouseY >20 && mouseY <20+15 ) {
+        a++;
+   }
+   if (mouseX >= 80 && mouseX <= 80+20 && 
+      mouseY >65 && mouseY <65+15) {
+        a--;
+   }
+   if (mouseX >= 80+60 && mouseX <= 80+60+20 && 
+      mouseY >20 && mouseY <20+15 ) {
+        b++;
+   }
+   if (mouseX >= 80+60 && mouseX <= 80+60+20 && 
+      mouseY >65 && mouseY <65+15) {
+        b--;
+   }
+   if (mouseX >= 80+120 && mouseX <= 80+120+20 && 
+      mouseY >20 && mouseY <20+15 ) {
+        c++;
+   }
+   if (mouseX >= 80+120 && mouseX <= 80+120+20 && 
+      mouseY >65 && mouseY <65+15 ) {
+        c--;
+   }
+   
+   
+   // f(x)2
+ 
+   if (mouseX >= x+80 && mouseX <= x+80+20 && 
+      mouseY >20 && mouseY <20+15 ) {
+        a2++;
+   }
+   if (mouseX >= x+80 && mouseX <= x+80+20 && 
+      mouseY >65 && mouseY <65+15) {
+        a2--;
+   }
+   if (mouseX >=x+80+60 && mouseX <= x+80+60+20 && 
+      mouseY >20 && mouseY <20+15 ) {
+        b2++;
+   }
+   if (mouseX >=x+80+60 && mouseX <= x+80+60+20 && 
+      mouseY >65 && mouseY <65+15) {
+        b2--;
+   }
+   if (mouseX >= x+80+120 && mouseX <= x+80+120+20 && 
+      mouseY >20 && mouseY <20+15 ) {
+        c2++;
+   }
+   if (mouseX >=x+ 80+120 && mouseX <=x+ 80+120+20 && 
+      mouseY >65 && mouseY <65+15 ) {
+        c2--;
+   }
+   setup();
+   
+      //hauteur ++
+   if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
+      mouseY >0 && mouseY <22 ) {
+        hauteur+=4;
+        
+        
+   }
+   //hauteur --
+   if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
+      mouseY >22 && mouseY <50 ) {
+        hauteur-=4; 
+        
+   }
+   
+   
+  
+}
+
+
+int f(int i){
+  return a*(i*i)+b*(i)+c;
+}
