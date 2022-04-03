@@ -4,12 +4,12 @@ int caseNumber=0;
 // ===========> fonctions utilitaires <============ // 
 
 // dessiner des series de box 
-void dessinerListeDeBox(PShape b, int dir, int lengthBox, int x, int y, int listLength){
+void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, int y, int listLength){
   //PShape shape = createShape();
   
   for (int j=0; j<(lengthBox*listLength);j+=lengthBox){
     pushMatrix();
-    PShape bb = myBoxes.getChild(caseNumber);
+    PShape bb = myboxes.getChild(caseNumber);
       switch(dir){
        case 0: 
            bb.translate(-lengthBox-j+x, y, 0);
@@ -31,19 +31,14 @@ void dessinerListeDeBox(PShape b, int dir, int lengthBox, int x, int y, int list
  // return shape;
 }
 
-PShape mainShape(int hauteur){
-  //PShape shape = createShape();
+PShape mainShape(PShape myboxes,int hauteur){
   caseNumber=0;
- 
   lights();
   background(0);
   pushMatrix();
-   
-    PShape shape =shapeSample(hauteur);
-    shape.translate(width/2,height/2,-50); 
+    PShape shape =shapeSample(myboxes,hauteur);
+    shape.translate(width/2,height/2,-50);
     shape.rotateX(-PI/2);
-    //shape.rotateZ(cos(frameCount/20)*PI);
-   
     caseNumber=0;
   popMatrix();
   return shape;
@@ -51,14 +46,14 @@ PShape mainShape(int hauteur){
 }
 
 
-PShape shapeSample(int hauteur){
+PShape shapeSample(PShape myboxes,int hauteur){
   PShape shape = createShape(GROUP);
   int j=0;
   
   for (int i=6; i<hauteur;i+=4){
       //shape.pushMatrix();
       
-      PShape et = etage(boxSize,i,0,0);
+      PShape et = etage(myboxes,boxSize,i,0,0);
       et.translate(0,0,boxSize*j++);
       shape.addChild(et);
       //shape();
@@ -68,16 +63,16 @@ PShape shapeSample(int hauteur){
   
 }
 // un hauteur en 3D
-PShape etage(int lengthBox,int tourNbBy4, int X,int Y) {
+PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
   PShape shape = createShape(GROUP);
   //beginShape();
     if (tourNbBy4<=6){
       pushMatrix();
       translate(0,0,-lengthBox);
-      dessinerListeDeBox(shape, 2, lengthBox,X,Y,1);
+      dessinerListeDeBox(myboxes,shape, 2, lengthBox,X,Y,1);
       popMatrix();
     }
-    dessinerListeDeBox(shape, 3, lengthBox,X+lengthBox,Y,2);
+    dessinerListeDeBox(myboxes,shape, 3, lengthBox,X+lengthBox,Y,2);
     //beginShape();
     int j=2;
     int caseNb=3;
@@ -90,18 +85,18 @@ PShape etage(int lengthBox,int tourNbBy4, int X,int Y) {
        switch(dir){
        
          case 0: 
-             dessinerListeDeBox(shape, dir, lengthBox,X+lengthBox*(tourNb+1),Y+lengthBox*(tourNb+1),j);
+             dessinerListeDeBox(myboxes,shape, dir, lengthBox,X+lengthBox*(tourNb+1),Y+lengthBox*(tourNb+1),j);
              break;
        
          case 1:
-             dessinerListeDeBox(shape, dir, lengthBox,X-lengthBox*(tourNb+1),Y+lengthBox*(tourNb+1),j);
+             dessinerListeDeBox(myboxes,shape, dir, lengthBox,X-lengthBox*(tourNb+1),Y+lengthBox*(tourNb+1),j);
              break;
        
          case 2:
-             dessinerListeDeBox(shape, dir, lengthBox,X-lengthBox*(tourNb),Y-lengthBox*(tourNb+1),j);
+             dessinerListeDeBox(myboxes,shape, dir, lengthBox,X-lengthBox*(tourNb),Y-lengthBox*(tourNb+1),j);
              break;
          default:
-             dessinerListeDeBox(shape, dir, lengthBox,X+lengthBox*(tourNb+2),Y-lengthBox*(tourNb),j);
+             dessinerListeDeBox(myboxes,shape, dir, lengthBox,X+lengthBox*(tourNb+2),Y-lengthBox*(tourNb),j);
              tourNb++; 
              break;
        }

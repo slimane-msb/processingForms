@@ -1,6 +1,8 @@
 int zoom = 30;
 PGraphics pg;
 PShape myBoxes;
+PShape myBoxes2;
+
 int boxSize =15;
 int hauteur=40;
 
@@ -39,27 +41,24 @@ void setup(){
   pg.endDraw();
 
   // start list boxes
-  
   myBoxes=createShape(GROUP);
   for (int i=0;i<10000;i++){
     PShape ps =vertexBox(boxSize,pg,i);
     myBoxes.addChild(ps);
     myBoxes.getChild(i).setFill(getColor(f(i)));
   }
+  // start list boxes2
+  myBoxes2=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes2.addChild(ps);
+    myBoxes2.getChild(i).setFill(getColor(f2(i)));
+  }
  
-  pyr1 = mainShape(hauteur);
-  //pyr2 = mainShape(hauteur);
+  pyr1 = mainShape(myBoxes,hauteur);
+  pyr2 = mainShape(myBoxes2,hauteur);
 
-  // create the shape 
-  //pushMatrix();
-  //  translate(200,2000);
-  //  mainShape(hauteur);   
-  //popMatrix();
   
-  //pushMatrix();
-  //  translate(10,10);
-  //  mainShape(hauteur);
-  //popMatrix();
 
 }
 
@@ -67,28 +66,30 @@ void setup(){
 
 
 void draw() {
+ 
+  pushMatrix();
+    translate(-150,550,20);
+    pushMatrix();
+      translate(10,0,0);
+      shape(pyr1);
+    popMatrix();
+      
+    pushMatrix();
+      translate(500,0,0);
+      shape(pyr2);
+    popMatrix();
+  popMatrix();
+  
+  
+  PShape txt = botoun();
+  shape(txt);
   //shader
   //shader(monProgrammeShader);
     //shape(pyr1);
     //shape(myBoxes);
   //resetShader();
-  //shader(monProgrammeShader);
-    pushMatrix();
-      translate(10,10);
-      //pyr2 = mainShape(hauteur);
-      shape(pyr1);
-    popMatrix();
-    
-    pushMatrix();
-      //translate(50,100);
-      rotateY(cos(frameCount/20)*PI);
-      shape(pyr1);
-    popMatrix();
+  //shader(monProgrammeShader); 
   //resetShader();
-  
-  PShape txt = botoun();
-  shape(txt);
-  //image(pg,100,100,300,300);
 }
 
 
@@ -288,4 +289,9 @@ void mouseClicked(){
 
 int f(int i){
   return a*(i*i)+b*(i)+c;
+}
+
+
+int f2(int i){
+  return a2*(i*i)+b2*(i)+c2;
 }
