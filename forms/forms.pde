@@ -1,10 +1,12 @@
 int zoom = 30;
 PGraphics pg;
+PGraphics pg2;
 PShape myBoxes;
 PShape myBoxes2;
 
 int boxSize =15;
 int hauteur=35;
+int txtDis=20;
 
 //F(X)
 int a=1,b=1,c=1;
@@ -26,36 +28,54 @@ void setup(){
   loadShader("myFragmentShader.glsl", 
              "myVertexShader.glsl"  );
 
-  // set up graphics 
+  // set up texture 
   pg = createGraphics(500,500);
   pg.beginDraw();
     pg.background(255);
-    for (int j=0 ; j<9;j++){
+    
+    for (int j=-1 ; j<9;j++){
       for (int i=0 ; i<10;i++){
-        
-        pg.fill(getColor(f(i)));//testing
-        pg.rect(i*20,j*20+20,20,20);
-        
+        pg.fill(getColor(f(i)));
+        pg.rect(i*txtDis,j*txtDis+txtDis,txtDis,txtDis);
         pg.fill(0);
-        pg.text(j*10+i,i*20+4,j*20+20-4);
+        pg.text(j*10+i,i*txtDis+4,j*txtDis+txtDis-4);
         
       }
     }
   pg.endDraw();
+  
+  
+  // set up texture for shape2
+  pg2 = createGraphics(500,500);
+  pg2.beginDraw();
+    pg2.background(255);
+    
+    for (int j=-1 ; j<9;j++){
+      for (int i=0 ; i<10;i++){
+        pg2.fill(getColor(f2(i)));//testing
+        pg2.rect(i*txtDis,j*txtDis+txtDis,txtDis,txtDis);
+        pg2.fill(0);
+        pg2.text(j*10+i,i*txtDis+4,j*txtDis+txtDis-4);
+        
+      }
+    }
+  pg2.endDraw();
+  
 
   // start list boxes
   myBoxes=createShape(GROUP);
   for (int i=0;i<10000;i++){
     PShape ps =vertexBox(boxSize,pg,i);
     myBoxes.addChild(ps);
-    myBoxes.getChild(i).setFill(getColor(f(i)));
+    //myBoxes.getChild(i).setFill(getColor(f(i)));
   }
   // start list boxes2
   myBoxes2=createShape(GROUP);
   for (int i=0;i<10000;i++){
-    PShape ps =vertexBox(boxSize,pg,i);
+    PShape ps =vertexBox(boxSize,pg2,i);
     myBoxes2.addChild(ps);
     myBoxes2.getChild(i).setFill(getColor(f2(i)));
+    println(f2(i));
   }
  
   pyr1 = mainShape(myBoxes,hauteur);
@@ -77,7 +97,7 @@ void draw() {
       translate(-150,550,-1000+mouseX);
       
       pushMatrix();
-      rotateY(frameCount/6.0);
+      //rotateY(frameCount/6.0);
         translate(10,0,0);
         shape(pyr1);
       popMatrix();
@@ -85,7 +105,7 @@ void draw() {
       pushMatrix();
           
         translate(500,0,0);
-        rotateY(frameCount/6.0);
+        //rotateY(frameCount/6.0);
         shape(pyr2);
       popMatrix();
     popMatrix();
@@ -94,7 +114,7 @@ void draw() {
   PShape txt = botoun();
   shape(txt);
   
-  image(g1,0.0,0.0,400.0,400.0);
+
 
 }
 

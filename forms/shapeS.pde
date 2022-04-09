@@ -36,7 +36,6 @@ PShape mainShape(PShape myboxes,int hauteur){
   background(0);
   pushMatrix();
     PShape shape =shapeSample(myboxes,hauteur);
-    //shape.translate(width/2,height/2,-50);
     shape.rotateX(-PI/2);
     caseNumber=0;
   popMatrix();
@@ -63,10 +62,7 @@ PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
   PShape shape = createShape(GROUP);
   
     if (tourNbBy4<=6){
-
-
       dessinerListeDeBox(myboxes,shape, 2, lengthBox,X,Y,1);
-
     }
     dessinerListeDeBox(myboxes,shape, 3, lengthBox,X+lengthBox,Y,2);
     int j=2;
@@ -115,44 +111,51 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
  pushMatrix();
    res.translate(-lengthBox/2,-lengthBox/2,-lengthBox/2);
    res.beginShape(QUADS);
- res.noStroke();
+ //res.noStroke();
       //behind
-      int x=10;
-      int y=5;
+      //int x=10;
+      //int y=5;
+      //if (nb<50){
+      //  x = (nb%10)*txtDis;
+      //  y = (nb/10)*txtDis;
+      //}
+      //res.texture(pg);
+      int x=0;
+      int y=0;
       if (nb<50){
         x = (nb%10)*20;
         y = (nb/10)*20;
+        res.texture(pg);
       }
-      res.texture(pg);
       res.attrib("idnum", (float)(f(nb)));
       res.vertex(0, 0,0,x,y);
-      res.vertex(lengthBox,0,0,x+20,y);
-      res.vertex(lengthBox,lengthBox,0,x+20,y+20);
-      res.vertex(0,lengthBox,0,x,y+20  );
+      res.vertex(lengthBox,0,0,x+txtDis,y);
+      res.vertex(lengthBox,lengthBox,0,x+txtDis,y+txtDis);
+      res.vertex(0,lengthBox,0,x,y+txtDis  );
       //front
       res.vertex(0, 0,lengthBox,x,y);
-      res.vertex(lengthBox,0,lengthBox,x+20,y);
-      res.vertex(lengthBox,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(lengthBox,0,lengthBox,x+txtDis,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x+txtDis,y+txtDis);
       res.vertex(0,lengthBox,lengthBox,x,y+20 );
       //right
       res.vertex(lengthBox, 0,0,x,y);
-      res.vertex(lengthBox,lengthBox,0,x+20,y);
-      res.vertex(lengthBox,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(lengthBox,lengthBox,0,x+txtDis,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x+txtDis,y+txtDis);
       res.vertex(lengthBox, 0,lengthBox,x,y+20  );
        //left
       res.vertex(0, 0,0,x,y);
-      res.vertex(0,lengthBox,0,x+20,y);
-      res.vertex(0,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(0,lengthBox,0,x+txtDis,y);
+      res.vertex(0,lengthBox,lengthBox,x+txtDis,y+txtDis);
       res.vertex(0, 0,lengthBox,x,y+20 );
       //up
       res.vertex(0, 0,0,x,y);
-      res.vertex(lengthBox,0,0,x+20,y);
-      res.vertex(lengthBox,0,lengthBox,x+20,y+20);
+      res.vertex(lengthBox,0,0,x+txtDis,y);
+      res.vertex(lengthBox,0,lengthBox,x+txtDis,y+txtDis);
       res.vertex(0, 0,lengthBox,x,y+20);
       //down
       res.vertex(0, lengthBox,0,x,y);
-      res.vertex(lengthBox,lengthBox,x+20,y);
-      res.vertex(lengthBox,lengthBox,lengthBox,x+20,y+20);
+      res.vertex(lengthBox,lengthBox,x+txtDis,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x+txtDis,y+txtDis);
       res.vertex(0, lengthBox,lengthBox,x,y+20);
       
     res.endShape();
