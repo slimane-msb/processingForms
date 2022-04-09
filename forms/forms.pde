@@ -77,6 +77,7 @@ void draw() {
       translate(-150,550,-1000+mouseX);
       
       pushMatrix();
+      rotateY(frameCount/6.0);
         translate(10,0,0);
         shape(pyr1);
       popMatrix();
