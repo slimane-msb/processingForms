@@ -34,3 +34,11 @@ void main() {
   gl_FragColor = vec4(N2/255.0,N1/255.0,N0/255.0,1.0); 
   //gl_FragColor = vec4(N0/255.0,N1/255.0,N2/255.0,1.0)*texture2D(texture,cordTexture ); 
 }
+/*
+
+1. rotate 
+2. use another sheadr for subrillance
+3. don't call shaeder first
+4. fix texture without subrillance 
+5. remplie en s'en fou 
+*/

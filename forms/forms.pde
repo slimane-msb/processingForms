@@ -12,12 +12,14 @@ int a2=1,b2=1,c2=1;
 
 // chader
 PShader monProgrammeShader;
+PGraphics g1;
 
 PShape pyr1;
 PShape pyr2;
 
 void setup(){
   size(1280, 720, P3D);
+  g1 = createGraphics(width,height,P3D);
   smooth(2);
   // shader
   monProgrammeShader = 
@@ -67,7 +69,7 @@ void setup(){
 
 
 void draw() {
-  shader(monProgrammeShader);
+  //shader(monProgrammeShader);
     background(200);
     
     pushMatrix();
@@ -86,17 +88,19 @@ void draw() {
         shape(pyr2);
       popMatrix();
     popMatrix();
-  resetShader();
+  //resetShader();
   
   PShape txt = botoun();
   shape(txt);
+  
+  image(g1,0.0,0.0,400.0,400.0);
 
 }
 
 
 void mousePressed(){
    
-  PGraphics g1 = createGraphics(width,height,P3D);
+  
   g1.beginDraw();
   g1.loadPixels() ;
    myBoxes=createShape(GROUP);
@@ -116,14 +120,36 @@ void mousePressed(){
   pyr1 = mainShape(myBoxes,hauteur);
   pyr2 = mainShape(myBoxes2,hauteur);
   
-  //g1.translate(-150,550,20);
-  //g1.translate(10,0,0); //preparation du dessin ici (translate, rotate, etc
+    
+    g1.pushMatrix();
+    g1.translate(-150,550,-1000+mouseX);
+      
+      g1.pushMatrix();
+        g1.translate(10,0,0);
+        g1.shape(pyr1);
+      g1.popMatrix();
+        
+      g1.pushMatrix();
+          
+        g1.translate(500,0,0);
+        g1.rotateY(frameCount/6.0);
+        g1.shape(pyr2);
+      g1.popMatrix();
+    g1.popMatrix();
+    
+
  // il faudra peut-etre recréer les modèles ici 
   g1.shape(pyr1);
   g1.resetShader();
   g1.endDraw();
   
-  image(g1,0.0,0.0);
+  int c = g1.get(mouseX, mouseY);
+    
+  int numberPicked = (int)(red(c)*256*256 + green(c)*256 + blue(c));
+  println(numberPicked);
+
+  
+  image(g1,0.0,0.0,400.0,400.0);
   
   
   
