@@ -4,13 +4,13 @@ PGraphics pg2;
 PShape myBoxes;
 PShape myBoxes2;
 
-int boxSize =15;
+int boxSize =20;
 int hauteur=35;
 int txtDis=20;
 
 //F(X)
-int a=1,b=1,c=1;
-int a2=1,b2=1,c2=1;
+int a=0,b=6,c=1;
+int a2=0,b2=6,c2=-1;
 
 // chader
 PShader monProgrammeShader;
@@ -30,7 +30,14 @@ void setup(){
 
   // set up texture 
   pg = createGraphics(500,500);
-  pg.beginDraw();
+ 
+  
+ reSetBoxes();
+}
+
+void reSetBoxes(){
+  int totalBoxes=4000;
+   pg.beginDraw();
     pg.background(255);
     
     for (int j=-1 ; j<9;j++){
@@ -64,14 +71,14 @@ void setup(){
 
   // start list boxes
   myBoxes=createShape(GROUP);
-  for (int i=0;i<10000;i++){
+  for (int i=0;i<totalBoxes;i++){
     PShape ps =vertexBox(boxSize,pg,i);
     myBoxes.addChild(ps);
     myBoxes.getChild(i).setFill(getColor(f(i)));
   }
   // start list boxes2
   myBoxes2=createShape(GROUP);
-  for (int i=0;i<10000;i++){
+  for (int i=0;i<totalBoxes;i++){
     PShape ps =vertexBox(boxSize,pg2,i);
     myBoxes2.addChild(ps);
     myBoxes2.getChild(i).setFill(getColor(f2(i)));
@@ -80,11 +87,6 @@ void setup(){
   pyr1 = mainShape(myBoxes,hauteur);
   pyr2 = mainShape(myBoxes2,hauteur);
 
-  
-
-}
-
-void once(){
 
 
 }
@@ -95,7 +97,7 @@ void once(){
 void draw() {
   float rotationSpeed=15.0;
   //shader(monProgrammeShader);
-    background(200);
+    background(0);
     
     pushMatrix();
 
@@ -211,13 +213,13 @@ color getColor(int n) {
   int sd = sommeDesDeviseur(n) - n; 
   
   if(sd == 1) { //Prime 
-    return color(230, 0, 0);
+    return color(33, 110, 255);
   } else if(sd == n) { //PerfectmyBoxes
-    return color(0, 0, 212);
+    return color(248, 255, 27);
   } else if(sd < n) { //Deficient
-    return color(0, 225, 0);
+    return color(7, 255, 22);
   } else { //Abundant
-    return color(0, 221, 212);
+    return color(255, 27, 142);
   }
 }
 
@@ -373,17 +375,20 @@ void mouseClicked(){
       //hauteur ++
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
       mouseY >0 && mouseY <22 ) {
-        hauteur+=4;
+        if(hauteur<=51) hauteur+=4;
+        else println("max hauteur recommendé");
         
         
    }
    //hauteur --
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
       mouseY >22 && mouseY <50 ) {
-        hauteur-=4; 
+        if(hauteur>=10) hauteur-=4;
+        else println("min hauteur recommendé"); 
         
    }
-   setup();
+   
+   reSetBoxes();
    
 }
 
