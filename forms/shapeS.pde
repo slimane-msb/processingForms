@@ -22,6 +22,7 @@ void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, 
            bb.translate(x, y+j, 0);
            break;
       }
+      if(caseNumber==0) bb.translate(0,0,-lengthBox);
       b.addChild(bb);
       caseNumber++;
     popMatrix();
@@ -61,7 +62,7 @@ PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
   PShape shape = createShape(GROUP);
     if (tourNbBy4<=6){
       pushMatrix();
-      translate(0,0,-lengthBox);
+      
       dessinerListeDeBox(myboxes,shape, 2, lengthBox,X,Y,1);
       popMatrix();
     }

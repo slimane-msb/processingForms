@@ -68,41 +68,19 @@ void setup(){
 
 void draw() {
   //shader(monProgrammeShader);
-  
   background(0);
-  
-  size(400, 400, P3D);
-  noFill();
-  background(204);
-  camera(70.0, 35.0, 120.0, 50.0, 50.0, 0.0, 
-         0.0, 1.0, 0.0);
-  translate(50, 50, 0);
-  rotateX(-PI/6);
-  rotateY(PI/3);
-  box(45);
-
-  //pushMatrix();//1
-  //  translate(-150,550,20);
-  //  // rotation:
-  //    pushMatrix();//2
-  //      translate(-mouseY,mouseX);
-  //      rotateY(frameCount);
-  //      pushMatrix();//3
-  //        translate(10,0,0);
-  //        shape(pyr1);
-  //      popMatrix();//3
-  //      translate(mouseY,-mouseX);
-  //  // endRotation
-  //    popMatrix();//2
+  pushMatrix();
+    translate(-150,550,200+mouseX);
+    pushMatrix();
+      translate(10,0,0);
+      shape(pyr1);
+    popMatrix();
       
-  //  pushMatrix();//4
-  //    translate(500,0,0);
-  //    shape(pyr2);
-  //  popMatrix();//4
-  //popMatrix();//1
-  //resetShader();
-   
-
+    pushMatrix();
+      translate(500,0,0);
+      shape(pyr2);
+    popMatrix();
+  popMatrix();
   
   PShape txt = botoun();
   shape(txt);
@@ -200,8 +178,14 @@ PShape botoun(){
       textSize(35);
       text("f(x)="+a+"x2+"+b+"x+"+c,10,10);
     popMatrix();
-    translate(x,50);
-    text("f(x)="+a2+"x2+"+b2+"x+"+c2,10,10);
+    pushMatrix();
+      translate(x,50);
+      text("f(x)="+a2+"x2+"+b2+"x+"+c2,10,10);
+    popMatrix();
+    pushMatrix();
+      translate(x/2,60);
+      text("ajouter une etage",10,10);
+    popMatrix();
   popMatrix();
   
   
