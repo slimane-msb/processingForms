@@ -67,7 +67,7 @@ void setup(){
   for (int i=0;i<10000;i++){
     PShape ps =vertexBox(boxSize,pg,i);
     myBoxes.addChild(ps);
-    //myBoxes.getChild(i).setFill(getColor(f(i)));
+    myBoxes.getChild(i).setFill(getColor(f(i)));
   }
   // start list boxes2
   myBoxes2=createShape(GROUP);
@@ -89,6 +89,7 @@ void setup(){
 
 
 void draw() {
+  float rotationSpeed=15.0;
   //shader(monProgrammeShader);
     background(200);
     
@@ -97,7 +98,7 @@ void draw() {
       translate(-150,550,-1000+mouseX);
       
       pushMatrix();
-      //rotateY(frameCount/6.0);
+      rotateY(frameCount/rotationSpeed);
         translate(10,0,0);
         shape(pyr1);
       popMatrix();
@@ -105,7 +106,7 @@ void draw() {
       pushMatrix();
           
         translate(500,0,0);
-        //rotateY(frameCount/6.0);
+        rotateY(frameCount/rotationSpeed);
         shape(pyr2);
       popMatrix();
     popMatrix();
