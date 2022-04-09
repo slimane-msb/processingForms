@@ -10,17 +10,17 @@ void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, 
     PShape bb = myboxes.getChild(caseNumber);
       switch(dir){
        case 0: 
-           //bb.translate(-lengthBox-j+x, y, 0);
+           bb.translate(-lengthBox-j+x, y, 0);
            break;
        case 1:
-           //bb.translate(x, y-j-lengthBox, 0);
+           bb.translate(x, y-j-lengthBox, 0);
            break;
        case 2:  
-           //bb.translate(j+x, y, 0);
+           bb.translate(j+x, y, 0);
            break;
        default:
            bb.translate(x, y+j, 0);
-           println(j);
+           
            break;
       }
       if(caseNumber==0) bb.translate(0,0,-lengthBox);
@@ -61,11 +61,12 @@ PShape shapeSample(PShape myboxes,int hauteur){
 // un hauteur en 3D
 PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
   PShape shape = createShape(GROUP);
+  
     if (tourNbBy4<=6){
-      pushMatrix();
-      
+
+
       dessinerListeDeBox(myboxes,shape, 2, lengthBox,X,Y,1);
-      popMatrix();
+
     }
     dessinerListeDeBox(myboxes,shape, 3, lengthBox,X+lengthBox,Y,2);
     int j=2;
@@ -123,7 +124,7 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
         y = (nb/10)*20;
       }
       res.texture(pg);
-      res.attrib("idnum", (float)f(nb));
+      res.attrib("idnum", (float)(f(nb)));
       res.vertex(0, 0,0,x,y);
       res.vertex(lengthBox,0,0,x+20,y);
       res.vertex(lengthBox,lengthBox,0,x+20,y+20);

@@ -68,7 +68,7 @@ void setup(){
 
 void draw() {
   shader(monProgrammeShader);
-    background(0);
+    background(200);
     
     pushMatrix();
 
@@ -99,6 +99,20 @@ void mousePressed(){
   PGraphics g1 = createGraphics(width,height,P3D);
   g1.beginDraw();
   g1.loadPixels() ;
+   myBoxes=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes.addChild(ps);
+    myBoxes.getChild(i).setFill(getColor(f(i)));
+  }
+  // start list boxes2
+  myBoxes2=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes2.addChild(ps);
+    myBoxes2.getChild(i).setFill(getColor(f2(i)));
+  }
+  
   pyr1 = mainShape(myBoxes,hauteur);
   pyr2 = mainShape(myBoxes2,hauteur);
   
@@ -108,6 +122,7 @@ void mousePressed(){
   g1.shape(pyr1);
   g1.resetShader();
   g1.endDraw();
+  
   image(g1,0.0,0.0);
   
   
