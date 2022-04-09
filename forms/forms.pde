@@ -67,20 +67,26 @@ void setup(){
 
 
 void draw() {
-  //shader(monProgrammeShader);
-  background(0);
-  pushMatrix();
-    translate(-150,550,200+mouseX);
+  shader(monProgrammeShader);
+    background(0);
+    
     pushMatrix();
-      translate(10,0,0);
-      shape(pyr1);
-    popMatrix();
+
+      translate(-150,550,-1000+mouseX);
       
-    pushMatrix();
-      translate(500,0,0);
-      shape(pyr2);
+      pushMatrix();
+        translate(10,0,0);
+        shape(pyr1);
+      popMatrix();
+        
+      pushMatrix();
+          
+        translate(500,0,0);
+        rotateY(frameCount/6.0);
+        shape(pyr2);
+      popMatrix();
     popMatrix();
-  popMatrix();
+  resetShader();
   
   PShape txt = botoun();
   shape(txt);
@@ -88,48 +94,31 @@ void draw() {
 }
 
 
-//void mousePressed(){
+void mousePressed(){
    
-//  PGraphics g1 = createGraphics(width,height,P3D);
-//  g1.beginDraw();
-//  g1.loadPixels() ;
-
-//  //g1.shader(monProgrammeShader);
-//    // start list boxes
-//  //myBoxes=createShape(GROUP);
-//  //for (int i=0;i<10000;i++){
-//  //  PShape ps =vertexBox(boxSize,pg,i);
-//  //  myBoxes.addChild(ps);
-//  //  myBoxes.getChild(i).setFill(getColor(f(i)));
-//  //}
-//  //// start list boxes2
-//  //myBoxes2=createShape(GROUP);
-//  //for (int i=0;i<10000;i++){
-//  //  PShape ps =vertexBox(boxSize,pg,i);
-//  //  myBoxes2.addChild(ps);
-//  //  myBoxes2.getChild(i).setFill(getColor(f2(i)));
-//  //}
-//  pyr1 = mainShape(myBoxes,hauteur);
-//  pyr2 = mainShape(myBoxes2,hauteur);
-//  //monProgrammeShader.set("idselect", 28);
-//  //g1 = createGraphics(1540, 1560, P3D);
-//  g1.translate(-150,550,20);
-//  g1.translate(10,0,0); //preparation du dessin ici (translate, rotate, etc
-// // il faudra peut-etre recréer les modèles ici 
-//  g1.shape(pyr1);
-//  g1.resetShader();
-//  g1.endDraw();
-//  image(g1,0.0,0.0);
+  PGraphics g1 = createGraphics(width,height,P3D);
+  g1.beginDraw();
+  g1.loadPixels() ;
+  pyr1 = mainShape(myBoxes,hauteur);
+  pyr2 = mainShape(myBoxes2,hauteur);
+  
+  //g1.translate(-150,550,20);
+  //g1.translate(10,0,0); //preparation du dessin ici (translate, rotate, etc
+ // il faudra peut-etre recréer les modèles ici 
+  g1.shape(pyr1);
+  g1.resetShader();
+  g1.endDraw();
+  image(g1,0.0,0.0);
   
   
   
   
   
-//  //to get the number use the ,methode green red blue and mutilply by 255 
-//  // recupere la couleur et *255 on aura le nombre 
-//  // la couleur au pixel qui a ete cliqué
+  //to get the number use the ,methode green red blue and mutilply by 255 
+  // recupere la couleur et *255 on aura le nombre 
+  // la couleur au pixel qui a ete cliqué
     
-//}
+}
 
 
 

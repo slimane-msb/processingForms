@@ -10,16 +10,17 @@ void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, 
     PShape bb = myboxes.getChild(caseNumber);
       switch(dir){
        case 0: 
-           bb.translate(-lengthBox-j+x, y, 0);
+           //bb.translate(-lengthBox-j+x, y, 0);
            break;
        case 1:
-           bb.translate(x, y-j-lengthBox, 0);
+           //bb.translate(x, y-j-lengthBox, 0);
            break;
        case 2:  
-           bb.translate(j+x, y, 0);
+           //bb.translate(j+x, y, 0);
            break;
        default:
            bb.translate(x, y+j, 0);
+           println(j);
            break;
       }
       if(caseNumber==0) bb.translate(0,0,-lengthBox);
@@ -35,7 +36,7 @@ PShape mainShape(PShape myboxes,int hauteur){
   background(0);
   pushMatrix();
     PShape shape =shapeSample(myboxes,hauteur);
-    shape.translate(width/2,height/2,-50);
+    //shape.translate(width/2,height/2,-50);
     shape.rotateX(-PI/2);
     caseNumber=0;
   popMatrix();
@@ -121,8 +122,8 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
         x = (nb%10)*20;
         y = (nb/10)*20;
       }
-        res.texture(pg);
-      res.attrib("idnum", (float)nb);
+      res.texture(pg);
+      res.attrib("idnum", (float)f(nb));
       res.vertex(0, 0,0,x,y);
       res.vertex(lengthBox,0,0,x+20,y);
       res.vertex(lengthBox,lengthBox,0,x+20,y+20);

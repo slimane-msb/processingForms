@@ -11,7 +11,7 @@ attribute vec3 normal;
 attribute vec2 textCord;
 
 attribute float idnum;
-attribute float idselect 
+attribute float idselect ;
 // if there are equal then color it otherwise; stay the same 
  
 
@@ -25,7 +25,7 @@ varying float n;
 void main() {
   cordTexture = textCord;
   gl_Position = transform * position; 
-  n=idnum;     
+  n=idnum;   
+    
 
-  
 }
