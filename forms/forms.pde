@@ -4,7 +4,7 @@ PShape myBoxes;
 PShape myBoxes2;
 
 int boxSize =15;
-int hauteur=40;
+int hauteur=35;
 
 //F(X)
 int a=1,b=1,c=1;
@@ -13,21 +13,22 @@ int a2=1,b2=1,c2=1;
 // chader
 PShader monProgrammeShader;
 
-//main shapes
 PShape pyr1;
 PShape pyr2;
 
 void setup(){
   size(1280, 720, P3D);
+  smooth(2);
   // shader
   monProgrammeShader = 
   loadShader("myFragmentShader.glsl", 
              "myVertexShader.glsl"  );
+
   // set up graphics 
   pg = createGraphics(500,500);
   pg.beginDraw();
     pg.background(255);
-    for (int j=0 ; j<10;j++){
+    for (int j=0 ; j<9;j++){
       for (int i=0 ; i<10;i++){
         
         pg.fill(getColor(f(i)));//testing
@@ -66,31 +67,92 @@ void setup(){
 
 
 void draw() {
- 
-  pushMatrix();
-    translate(-150,550,20);
-    pushMatrix();
-      translate(10,0,0);
-      shape(pyr1);
-    popMatrix();
-      
-    pushMatrix();
-      translate(500,0,0);
-      shape(pyr2);
-    popMatrix();
-  popMatrix();
+  //shader(monProgrammeShader);
   
+  background(0);
+  
+  size(400, 400, P3D);
+  noFill();
+  background(204);
+  camera(70.0, 35.0, 120.0, 50.0, 50.0, 0.0, 
+         0.0, 1.0, 0.0);
+  translate(50, 50, 0);
+  rotateX(-PI/6);
+  rotateY(PI/3);
+  box(45);
+
+  //pushMatrix();//1
+  //  translate(-150,550,20);
+  //  // rotation:
+  //    pushMatrix();//2
+  //      translate(-mouseY,mouseX);
+  //      rotateY(frameCount);
+  //      pushMatrix();//3
+  //        translate(10,0,0);
+  //        shape(pyr1);
+  //      popMatrix();//3
+  //      translate(mouseY,-mouseX);
+  //  // endRotation
+  //    popMatrix();//2
+      
+  //  pushMatrix();//4
+  //    translate(500,0,0);
+  //    shape(pyr2);
+  //  popMatrix();//4
+  //popMatrix();//1
+  //resetShader();
+   
+
   
   PShape txt = botoun();
   shape(txt);
-  //shader
-  //shader(monProgrammeShader);
-    //shape(pyr1);
-    //shape(myBoxes);
-  //resetShader();
-  //shader(monProgrammeShader); 
-  //resetShader();
+
 }
+
+
+//void mousePressed(){
+   
+//  PGraphics g1 = createGraphics(width,height,P3D);
+//  g1.beginDraw();
+//  g1.loadPixels() ;
+
+//  //g1.shader(monProgrammeShader);
+//    // start list boxes
+//  //myBoxes=createShape(GROUP);
+//  //for (int i=0;i<10000;i++){
+//  //  PShape ps =vertexBox(boxSize,pg,i);
+//  //  myBoxes.addChild(ps);
+//  //  myBoxes.getChild(i).setFill(getColor(f(i)));
+//  //}
+//  //// start list boxes2
+//  //myBoxes2=createShape(GROUP);
+//  //for (int i=0;i<10000;i++){
+//  //  PShape ps =vertexBox(boxSize,pg,i);
+//  //  myBoxes2.addChild(ps);
+//  //  myBoxes2.getChild(i).setFill(getColor(f2(i)));
+//  //}
+//  pyr1 = mainShape(myBoxes,hauteur);
+//  pyr2 = mainShape(myBoxes2,hauteur);
+//  //monProgrammeShader.set("idselect", 28);
+//  //g1 = createGraphics(1540, 1560, P3D);
+//  g1.translate(-150,550,20);
+//  g1.translate(10,0,0); //preparation du dessin ici (translate, rotate, etc
+// // il faudra peut-etre recréer les modèles ici 
+//  g1.shape(pyr1);
+//  g1.resetShader();
+//  g1.endDraw();
+//  image(g1,0.0,0.0);
+  
+  
+  
+  
+  
+//  //to get the number use the ,methode green red blue and mutilply by 255 
+//  // recupere la couleur et *255 on aura le nombre 
+//  // la couleur au pixel qui a ete cliqué
+    
+//}
+
 
 
 
@@ -266,7 +328,7 @@ void mouseClicked(){
       mouseY >65 && mouseY <65+15 ) {
         c2--;
    }
-   setup();
+   
    
       //hauteur ++
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
@@ -281,10 +343,12 @@ void mouseClicked(){
         hauteur-=4; 
         
    }
+   setup();
    
-   
-  
 }
+
+
+
 
 
 int f(int i){

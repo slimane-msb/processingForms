@@ -4,9 +4,7 @@ int caseNumber=0;
 // ===========> fonctions utilitaires <============ // 
 
 // dessiner des series de box 
-void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, int y, int listLength){
-  //PShape shape = createShape();
-  
+void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, int y, int listLength){ 
   for (int j=0; j<(lengthBox*listLength);j+=lengthBox){
     pushMatrix();
     PShape bb = myboxes.getChild(caseNumber);
@@ -28,7 +26,6 @@ void dessinerListeDeBox(PShape myboxes,PShape b, int dir, int lengthBox, int x, 
       caseNumber++;
     popMatrix();
   }
- // return shape;
 }
 
 PShape mainShape(PShape myboxes,int hauteur){
@@ -51,13 +48,10 @@ PShape shapeSample(PShape myboxes,int hauteur){
   int j=0;
   
   for (int i=6; i<hauteur;i+=4){
-      //shape.pushMatrix();
-      
       PShape et = etage(myboxes,boxSize,i,0,0);
       et.translate(0,0,boxSize*j++);
       shape.addChild(et);
-      //shape();
-      //shape.popMatrix();
+
   }
   return shape;
   
@@ -65,7 +59,6 @@ PShape shapeSample(PShape myboxes,int hauteur){
 // un hauteur en 3D
 PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
   PShape shape = createShape(GROUP);
-  //beginShape();
     if (tourNbBy4<=6){
       pushMatrix();
       translate(0,0,-lengthBox);
@@ -73,7 +66,6 @@ PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
       popMatrix();
     }
     dessinerListeDeBox(myboxes,shape, 3, lengthBox,X+lengthBox,Y,2);
-    //beginShape();
     int j=2;
     int caseNb=3;
     int tourNb= 0;
@@ -106,12 +98,6 @@ PShape etage(PShape myboxes,int lengthBox,int tourNbBy4, int X,int Y) {
           }
       
     }
-    //endShape();
-  //endShape();
-  
-  // shader
-  // box.attrib("varname",name);
-  // shader.set(c); look at last tp how they work 
   
   return shape;
 }
@@ -126,14 +112,16 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
  pushMatrix();
    res.translate(-lengthBox/2,-lengthBox/2,-lengthBox/2);
    res.beginShape(QUADS);
+ res.noStroke();
       //behind
-      int x=0;
-      int y=0;
+      int x=10;
+      int y=5;
       if (nb<50){
         x = (nb%10)*20;
         y = (nb/10)*20;
-        res.texture(pg);
       }
+        res.texture(pg);
+      res.attrib("idnum", (float)nb);
       res.vertex(0, 0,0,x,y);
       res.vertex(lengthBox,0,0,x+20,y);
       res.vertex(lengthBox,lengthBox,0,x+20,y+20);
