@@ -14,6 +14,7 @@ int a2=0,b2=6,c2=-1;
 
 // chader
 PShader monProgrammeShader;
+PShader monProgrammeShaderPicking;
 PGraphics g1;
 
 PShape pyr1;
@@ -27,6 +28,10 @@ void setup(){
   monProgrammeShader = 
   loadShader("myFragmentShader.glsl", 
              "myVertexShader.glsl"  );
+             
+  monProgrammeShaderPicking = 
+    loadShader("myFragmentShaderPicking.glsl", 
+               "myVertexShaderPicking.glsl"  );
 
   // set up texture 
   pg = createGraphics(500,500);
@@ -96,15 +101,15 @@ void reSetBoxes(){
 
 void draw() {
   float rotationSpeed=15.0;
-  //shader(monProgrammeShader);
+  shader(monProgrammeShaderPicking);
     background(0);
     
     pushMatrix();
 
-      translate(-150+mouseX,400,-800+mouseY);
-      
+      //translate(-150+mouseX,400,-800+mouseY);
+      translate(400,400,0);
       pushMatrix();
-      rotateY(frameCount/rotationSpeed);
+      //rotateY(frameCount/rotationSpeed);
         translate(10,0,0);
         shape(pyr1);
       popMatrix();
@@ -112,11 +117,11 @@ void draw() {
       pushMatrix();
           
         translate(500,0,0);
-        rotateY(frameCount/rotationSpeed);
+        //rotateY(frameCount/rotationSpeed);
         shape(pyr2);
       popMatrix();
     popMatrix();
-  //resetShader();
+  resetShader();
   
   PShape txt = botoun();
   shape(txt);
@@ -129,55 +134,57 @@ void draw() {
 void mousePressed(){
    
   
- // g1.beginDraw();
- // g1.loadPixels() ;
- //  myBoxes=createShape(GROUP);
- // for (int i=0;i<10000;i++){
- //   PShape ps =vertexBox(boxSize,pg,i);
- //   myBoxes.addChild(ps);
- //   myBoxes.getChild(i).setFill(getColor(f(i)));
- // }
- // // start list boxes2
- // myBoxes2=createShape(GROUP);
- // for (int i=0;i<10000;i++){
- //   PShape ps =vertexBox(boxSize,pg,i);
- //   myBoxes2.addChild(ps);
- //   myBoxes2.getChild(i).setFill(getColor(f2(i)));
- // }
+  g1.beginDraw();
+  g1.loadPixels() ;
+   myBoxes=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes.addChild(ps);
+    myBoxes.getChild(i).setFill(getColor(f(i)));
+  }
+  // start list boxes2
+  myBoxes2=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes2.addChild(ps);
+    myBoxes2.getChild(i).setFill(getColor(f2(i)));
+  }
   
- // pyr1 = mainShape(myBoxes,hauteur);
- // pyr2 = mainShape(myBoxes2,hauteur);
+  pyr1 = mainShape(myBoxes,hauteur);
+  pyr2 = mainShape(myBoxes2,hauteur);
   
     
- //   g1.pushMatrix();
- //   g1.translate(-150,550,-1000+mouseX);
+    g1.pushMatrix();
+    //g1.translate(-150,550,-1000+mouseX);
+    g1.translate(400,400,0);
       
- //     g1.pushMatrix();
- //       g1.translate(10,0,0);
- //       g1.shape(pyr1);
- //     g1.popMatrix();
+      g1.pushMatrix();
+        g1.translate(10,0,0);
+        g1.shape(pyr1);
+      g1.popMatrix();
         
- //     g1.pushMatrix();
+      g1.pushMatrix();
           
- //       g1.translate(500,0,0);
- //       g1.rotateY(frameCount/6.0);
- //       g1.shape(pyr2);
- //     g1.popMatrix();
- //   g1.popMatrix();
+        g1.translate(500,0,0);
+        //g1.rotateY(frameCount/6.0);
+        g1.shape(pyr2);
+      g1.popMatrix();
+    g1.popMatrix();
     
 
- //// il faudra peut-etre recréer les modèles ici 
- // g1.shape(pyr1);
- // g1.resetShader();
- // g1.endDraw();
+ // il faudra peut-etre recréer les modèles ici 
+  g1.shape(pyr1);
+  g1.resetShader();
+  g1.endDraw();
   
- // int c = g1.get(mouseX, mouseY);
+  int c = g1.get(mouseX, mouseY);
     
- // int numberPicked = (int)(red(c)*256*256 + green(c)*256 + blue(c));
- // println(numberPicked);
+  int numberPicked = (int)(red(c)*256*256 + green(c)*256 + blue(c));
+  println(numberPicked);
+  //pyr1.attrib("idselect", (float)(numberPicked));
 
   
- // image(g1,0.0,0.0,400.0,400.0);
+  
   
   
   
