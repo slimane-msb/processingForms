@@ -187,7 +187,7 @@ PShape botoun(){
   pushMatrix();
     pushMatrix();
       translate(10,50);
-      textSize(35);
+      textSize(27);
       text("f(x)="+a+"x2+"+b+"x+"+c,10,10);
     popMatrix();
     pushMatrix();
