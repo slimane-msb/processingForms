@@ -111,22 +111,11 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
  pushMatrix();
    res.translate(-lengthBox/2,-lengthBox/2,-lengthBox/2);
    res.beginShape(QUADS);
- //res.noStroke();
-      //behind
-      //int x=10;
-      //int y=5;
-      //if (nb<50){
-      //  x = (nb%10)*txtDis;
-      //  y = (nb/10)*txtDis;
-      //}
-      //res.texture(pg);
       int x=0;
       int y=0;
-      //if (nb<50){
         x = (nb%10)*txtDis;
         y = (nb/10)*txtDis;
         res.texture(pg);
-      //}
       res.attrib("idnum", (float)(nb));
       res.vertex(0, 0,0,x,y);
       res.vertex(lengthBox,0,0,x+txtDis,y);

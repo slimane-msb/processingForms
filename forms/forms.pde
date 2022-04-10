@@ -24,8 +24,6 @@ PShape pyr2;
 void setup(){
   size(1280, 720, P3D);
   g1 = createGraphics(width,height,P3D);
-  smooth(2);
-  // shader
   monProgrammeShader = 
   loadShader("myFragmentShader.glsl", 
              "myVertexShader.glsl"  );
@@ -33,35 +31,30 @@ void setup(){
   monProgrammeShaderPicking = 
     loadShader("myFragmentShaderPicking.glsl", 
                "myVertexShaderPicking.glsl"  );
-
   // set up texture 
   pg = createGraphics(500,500);
- 
-  
- reSetBoxes();
+  reSetBoxes();
 }
 
 void reSetBoxes(){
    pg.beginDraw();
-    pg.background(255);
+   pg.background(255);
     
-    for (int j=-1 ; j<totalBoxes/10;j++){
-      for (int i=0 ; i<10;i++){
-        pg.fill(getColor(f(i)));
-        pg.rect(i*txtDis,j*txtDis+txtDis,txtDis,txtDis);
-        pg.fill(0);
-        pg.text(j*10+i,i*txtDis+4,j*txtDis+txtDis-4);
-        
-      }
+  for (int j=-1 ; j<totalBoxes/10;j++){
+    for (int i=0 ; i<10;i++){
+      pg.fill(getColor(f(i)));
+      pg.rect(i*txtDis,j*txtDis+txtDis,txtDis,txtDis);
+      pg.fill(0);
+      pg.text(j*10+i,i*txtDis+4,j*txtDis+txtDis-4);
+      
     }
+  }
   pg.endDraw();
-  
   
   // set up texture for shape2
   pg2 = createGraphics(500,500);
   pg2.beginDraw();
     pg2.background(255);
-    
     for (int j=-1 ; j<totalBoxes/10;j++){
       for (int i=0 ; i<10;i++){
         pg2.fill(getColor(f2(i)));//testing
@@ -73,7 +66,6 @@ void reSetBoxes(){
     }
   pg2.endDraw();
   
-
   // start list boxes
   myBoxes=createShape(GROUP);
   for (int i=0;i<totalBoxes;i++){
@@ -91,9 +83,6 @@ void reSetBoxes(){
  
   pyr1 = mainShape(myBoxes,hauteur);
   pyr2 = mainShape(myBoxes2,hauteur);
-
-
-
 }
 
 
@@ -103,35 +92,28 @@ void draw() {
   reSetBoxes();
   float rotationSpeed=5.0;
   shader(monProgrammeShaderPicking);
-    background(0);
-    
+  background(0);
+  pushMatrix();
+    translate(-150+mouseX,400,-800+mouseY);
+    //translate(400,400,0);
     pushMatrix();
-
-      translate(-150+mouseX,400,-800+mouseY);
-      //translate(400,400,0);
-      pushMatrix();
       rotateY(frameCount/rotationSpeed);
-        translate(10,0,0);
-        shape(pyr1);
-      popMatrix();
-        
-      pushMatrix();
-          
-        translate(500,0,0);
-        rotateY(frameCount/rotationSpeed);
-        shape(pyr2);
-      popMatrix();
+      translate(10,0,0);
+      shape(pyr1);
     popMatrix();
+      
+    pushMatrix();
+      translate(500,0,0);
+      rotateY(frameCount/rotationSpeed);
+      shape(pyr2);
+    popMatrix();
+  popMatrix();
   resetShader();
   
   PShape txt = botoun();
   shape(txt);
   
-  //image(pg,0,0,400,400);
   image(g1,0,100,150,150);
-  
-
-
 }
 
 
@@ -140,20 +122,7 @@ void mousePressed(){
   //g1.shader(monProgrammeShader);
   g1.beginDraw();
   g1.loadPixels() ;
-  myBoxes=createShape(GROUP);
-  for (int i=0;i<totalBoxes;i++){
-    PShape ps =vertexBox(boxSize,pg,i);
-    myBoxes.addChild(ps);
-    myBoxes.getChild(i).setFill(getColor(f(i)));
-  }
-  myBoxes2=createShape(GROUP);
-  for (int i=0;i<totalBoxes;i++){
-    PShape ps =vertexBox(boxSize,pg2,i);
-    myBoxes2.addChild(ps);
-    myBoxes2.getChild(i).setFill(getColor(f2(i)));
-  }
-  pyr1 = mainShape(myBoxes,hauteur);
-  pyr2 = mainShape(myBoxes2,hauteur);
+  reSetBoxes();
   g1.pushMatrix();
   g1.translate(-150,550,-1000+mouseX);
   g1.translate(400,400,0);
@@ -210,9 +179,6 @@ color getColor(int n) {
     return color(255, 27, 142);
   }
 }
-
-
-
 
 
 PShape botoun(){
@@ -292,12 +258,10 @@ PShape botoun(){
   fill(0, 122, 0);
   triangle(width/2, 5, width/2-10, 20, width/2+10, 20);
 
-
   // hauteur --
   fill(0, 122, 0);
   triangle(width/2, 40, width/2-10, 25, width/2+10, 25);
 
-  
   return res;
   
 }
@@ -333,7 +297,6 @@ void mouseClicked(){
    
    
    // f(x)2
- 
    if (mouseX >= x+80 && mouseX <= x+80+20 && 
       mouseY >20 && mouseY <20+15 ) {
         a2++;
@@ -359,24 +322,18 @@ void mouseClicked(){
         c2--;
    }
    
-   
       //hauteur ++
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
       mouseY >0 && mouseY <22 ) {
         if(hauteur<=39) hauteur+=4;
         else println("max hauteur recommendé");
-        
-        
    }
    //hauteur --
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
       mouseY >22 && mouseY <50 ) {
         if(hauteur>=10) hauteur-=4;
-        else println("min hauteur recommendé"); 
-        
-   }
-   
-   
+        else println("min hauteur recommendé");    
+   } 
 }
 
 
