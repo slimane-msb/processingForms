@@ -12,7 +12,7 @@ varying vec4 vertColor;
 varying vec4 vertTexCoord;
 
 void main() {
-  vec4 colorTest = vec4(0.4157, 1.0, 0.0, 1.0);
-  //gl_FragColor = texture2D(texture, vertTexCoord.st) * vertColor;
+  vec4 colorTest = vec4(0.0, 0.8667, 1.0, 1.0);
   gl_FragColor = texture2D(texture, vertTexCoord.st) * colorTest;
+  //gl_FragColor = texture2D(texture, vertTexCoord.st) * colorTest;
 }

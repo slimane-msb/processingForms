@@ -109,7 +109,7 @@ void draw() {
       //translate(-150+mouseX,400,-800+mouseY);
       translate(400,400,0);
       pushMatrix();
-      //rotateY(frameCount/rotationSpeed);
+      rotateY(frameCount/rotationSpeed);
         translate(10,0,0);
         shape(pyr1);
       popMatrix();
@@ -117,7 +117,7 @@ void draw() {
       pushMatrix();
           
         translate(500,0,0);
-        //rotateY(frameCount/rotationSpeed);
+        rotateY(frameCount/rotationSpeed);
         shape(pyr2);
       popMatrix();
     popMatrix();
