@@ -5,7 +5,7 @@ PShape myBoxes;
 PShape myBoxes2;
 
 int boxSize =20;
-int hauteur=31;
+int hauteur=35;
 int txtDis=20;
 
 //F(X)
@@ -36,7 +36,7 @@ void setup(){
 }
 
 void reSetBoxes(){
-  int totalBoxes=2000;
+  int totalBoxes=3000;
    pg.beginDraw();
     pg.background(255);
     
@@ -101,10 +101,12 @@ void draw() {
     
     pushMatrix();
 
-      translate(-150+mouseX,400,-800+mouseY);
+      //translate(-150+mouseX,400,-800+mouseY);
+      //translate(-150,400,-800);
+      translate ( 100,400,0);
       
       pushMatrix();
-      rotateY(frameCount/rotationSpeed);
+      //rotateY(frameCount/rotationSpeed);
         translate(10,0,0);
         shape(pyr1);
       popMatrix();
@@ -112,7 +114,7 @@ void draw() {
       pushMatrix();
           
         translate(500,0,0);
-        rotateY(frameCount/rotationSpeed);
+        //rotateY(frameCount/rotationSpeed);
         shape(pyr2);
       popMatrix();
     popMatrix();
@@ -120,6 +122,8 @@ void draw() {
   
   PShape txt = botoun();
   shape(txt);
+  translate(300,300);
+  image(g1,0.0,0.0,400.0,400.0);
   
 
 
@@ -129,59 +133,47 @@ void draw() {
 void mousePressed(){
    
   
- // g1.beginDraw();
- // g1.loadPixels() ;
- //  myBoxes=createShape(GROUP);
- // for (int i=0;i<10000;i++){
- //   PShape ps =vertexBox(boxSize,pg,i);
- //   myBoxes.addChild(ps);
- //   myBoxes.getChild(i).setFill(getColor(f(i)));
- // }
- // // start list boxes2
- // myBoxes2=createShape(GROUP);
- // for (int i=0;i<10000;i++){
- //   PShape ps =vertexBox(boxSize,pg,i);
- //   myBoxes2.addChild(ps);
- //   myBoxes2.getChild(i).setFill(getColor(f2(i)));
- // }
+  g1.beginDraw();
+  g1.loadPixels() ;
+   myBoxes=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes.addChild(ps);
+    myBoxes.getChild(i).setFill(getColor(f(i)));
+  }
+  // start list boxes2
+  myBoxes2=createShape(GROUP);
+  for (int i=0;i<10000;i++){
+    PShape ps =vertexBox(boxSize,pg,i);
+    myBoxes2.addChild(ps);
+    myBoxes2.getChild(i).setFill(getColor(f2(i)));
+  }
   
- // pyr1 = mainShape(myBoxes,hauteur);
- // pyr2 = mainShape(myBoxes2,hauteur);
+  pyr1 = mainShape(myBoxes,hauteur);
+  pyr2 = mainShape(myBoxes2,hauteur);
   
+  g1.pushMatrix();
+  g1.rotateX(-PI/2);
+  g1.popMatrix();
+   
+  g1.pushMatrix();
+  g1.translate ( 100,400,0);
+  g1.pushMatrix();
+  g1.translate(10,0,0);
+  g1.popMatrix();
+  g1.pushMatrix();
+  g1.translate(500,0,0);
+  g1.popMatrix();
+  g1.popMatrix();
+ 
+  g1.shape(pyr1);
+  g1.resetShader();
+  g1.endDraw();
+  
+  int c = g1.get(mouseX, mouseY);
     
- //   g1.pushMatrix();
- //   g1.translate(-150,550,-1000+mouseX);
-      
- //     g1.pushMatrix();
- //       g1.translate(10,0,0);
- //       g1.shape(pyr1);
- //     g1.popMatrix();
-        
- //     g1.pushMatrix();
-          
- //       g1.translate(500,0,0);
- //       g1.rotateY(frameCount/6.0);
- //       g1.shape(pyr2);
- //     g1.popMatrix();
- //   g1.popMatrix();
-    
-
- //// il faudra peut-etre recréer les modèles ici 
- // g1.shape(pyr1);
- // g1.resetShader();
- // g1.endDraw();
-  
- // int c = g1.get(mouseX, mouseY);
-    
- // int numberPicked = (int)(red(c)*256*256 + green(c)*256 + blue(c));
- // println(numberPicked);
-
-  
- // image(g1,0.0,0.0,400.0,400.0);
-  
-  
-  
-  
+  int numberPicked = (int)(red(c)*256*256 + green(c)*256 + blue(c));
+  println(numberPicked);
   
  // //to get the number use the ,methode green red blue and mutilply by 255 
  // // recupere la couleur et *255 on aura le nombre 
@@ -375,10 +367,9 @@ void mouseClicked(){
       //hauteur ++
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
       mouseY >0 && mouseY <22 ) {
-        if(hauteur<=39) hauteur+=4;
+        if(hauteur<=47) hauteur+=4;
         else println("max hauteur recommendé");
-        
-        
+   
    }
    //hauteur --
    if (mouseX >=width/2-20 && mouseX <=width/2-10+30 && 
@@ -387,6 +378,7 @@ void mouseClicked(){
         else println("min hauteur recommendé"); 
         
    }
+   
    reSetBoxes();
    
 }
