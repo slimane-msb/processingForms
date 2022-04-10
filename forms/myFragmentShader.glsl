@@ -19,26 +19,9 @@ varying float n;
 vec4 vertColor;
 
 void main() {
-  // vec4 coltex=texture2D(texture, cordTexture);
-  // vec3 ecPosition = vec3(modelview * vertPosition);  
-  // vec3 ecNormal = normalize(normalMatrix * vertNormal);
-
-  // vec3 direction = normalize(lightPosition.xyz - ecPosition);    
-  // float intensity = max(0.0, dot(direction, ecNormal));
-
-  
-  //gl_FragColor = vertColor;
+  // gl_FragColor = vec4(0.7529, 0.1373, 0.1373, 1.0);
   float N0 = mod(n, 256);
   float N1 = mod (((n-N0 ) /256), 256);
   float N2 = mod (((n-N0-N1*256 ) /256/256), 256);
   gl_FragColor = vec4(N2/255.0,N1/255.0,N0/255.0,1.0); 
-  //gl_FragColor = vec4(N0/255.0,N1/255.0,N2/255.0,1.0)*texture2D(texture,cordTexture ); 
 }
-/*
-
-1. rotate 
-2. use another sheadr for subrillance
-3. don't call shaeder first
-4. fix texture without subrillance 
-5. remplie en s'en fou 
-*/

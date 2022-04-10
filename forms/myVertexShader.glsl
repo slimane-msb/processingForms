@@ -25,5 +25,6 @@ varying float n;
 void main() {
   cordTexture = textCord;
   gl_Position = transform * position; 
-  n=idnum;   
+  n=idnum;  
+  
 }

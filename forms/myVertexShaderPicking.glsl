@@ -9,9 +9,13 @@ attribute vec2 texCoord;
 varying vec4 vertColor;
 varying vec4 vertTexCoord;
 
+attribute float idSelect;
+varying float idS;
+
 void main() {
   gl_Position = transformMatrix * position;
     
   vertColor = color;
   vertTexCoord = texMatrix * vec4(texCoord, 1.0, 1.0);
+  idS=idSelect;
 }

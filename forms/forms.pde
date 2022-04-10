@@ -7,6 +7,7 @@ PShape myBoxes2;
 int boxSize =20;
 int hauteur=31;
 int txtDis=20;
+int totalBoxes=2000;
 
 //F(X)
 int a=0,b=6,c=1;
@@ -41,7 +42,6 @@ void setup(){
 }
 
 void reSetBoxes(){
-  int totalBoxes=2000;
    pg.beginDraw();
     pg.background(255);
     
@@ -100,14 +100,15 @@ void reSetBoxes(){
 
 
 void draw() {
-  float rotationSpeed=15.0;
+  reSetBoxes();
+  float rotationSpeed=5.0;
   shader(monProgrammeShaderPicking);
     background(0);
     
     pushMatrix();
 
-      //translate(-150+mouseX,400,-800+mouseY);
-      translate(400,400,0);
+      translate(-150+mouseX,400,-800+mouseY);
+      //translate(400,400,0);
       pushMatrix();
       rotateY(frameCount/rotationSpeed);
         translate(10,0,0);
@@ -127,6 +128,7 @@ void draw() {
   shape(txt);
   
   //image(pg,0,0,400,400);
+  image(g1,0,100,150,150);
   
 
 
@@ -135,66 +137,43 @@ void draw() {
 
 void mousePressed(){
    
-  
+  //g1.shader(monProgrammeShader);
   g1.beginDraw();
   g1.loadPixels() ;
-   myBoxes=createShape(GROUP);
-  for (int i=0;i<10000;i++){
+  myBoxes=createShape(GROUP);
+  for (int i=0;i<totalBoxes;i++){
     PShape ps =vertexBox(boxSize,pg,i);
     myBoxes.addChild(ps);
     myBoxes.getChild(i).setFill(getColor(f(i)));
   }
-  // start list boxes2
   myBoxes2=createShape(GROUP);
-  for (int i=0;i<10000;i++){
-    PShape ps =vertexBox(boxSize,pg,i);
+  for (int i=0;i<totalBoxes;i++){
+    PShape ps =vertexBox(boxSize,pg2,i);
     myBoxes2.addChild(ps);
     myBoxes2.getChild(i).setFill(getColor(f2(i)));
   }
-  
   pyr1 = mainShape(myBoxes,hauteur);
   pyr2 = mainShape(myBoxes2,hauteur);
-  
-    
-    g1.pushMatrix();
-    //g1.translate(-150,550,-1000+mouseX);
-    g1.translate(400,400,0);
-      
-      g1.pushMatrix();
-        g1.translate(10,0,0);
-        g1.shape(pyr1);
-      g1.popMatrix();
-        
-      g1.pushMatrix();
-          
-        g1.translate(500,0,0);
-        //g1.rotateY(frameCount/6.0);
-        g1.shape(pyr2);
-      g1.popMatrix();
-    g1.popMatrix();
-    
-
- // il faudra peut-etre recréer les modèles ici 
+  g1.pushMatrix();
+  g1.translate(-150,550,-1000+mouseX);
+  g1.translate(400,400,0);
+  g1.pushMatrix();
+  g1.translate(10,0,0);
   g1.shape(pyr1);
+  g1.popMatrix();
+  g1.pushMatrix();
+  g1.translate(500,0,0);
+  g1.rotateY(frameCount/6.0);
+  g1.shape(pyr2);
+  g1.popMatrix();
+  g1.popMatrix(); 
   g1.resetShader();
   g1.endDraw();
   
   int c = g1.get(mouseX, mouseY);
-    
   int numberPicked = (int)(red(c)*256*256 + green(c)*256 + blue(c));
   println(numberPicked);
-  //pyr1.attrib("idselect", (float)(numberPicked));
-
-  
-  
-  
-  
-  
-  
-  
- // //to get the number use the ,methode green red blue and mutilply by 255 
- // // recupere la couleur et *255 on aura le nombre 
- // // la couleur au pixel qui a ete cliqué
+  //pyr1.attrib("idselect", (float)(numberPicked)
     
 }
 
@@ -396,7 +375,7 @@ void mouseClicked(){
         else println("min hauteur recommendé"); 
         
    }
-   reSetBoxes();
+   
    
 }
 

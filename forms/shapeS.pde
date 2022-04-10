@@ -127,7 +127,7 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
         y = (nb/10)*txtDis;
         res.texture(pg);
       //}
-      res.attrib("idnum", (float)(f(nb)));
+      res.attrib("idnum", (float)(nb));
       res.vertex(0, 0,0,x,y);
       res.vertex(lengthBox,0,0,x+txtDis,y);
       res.vertex(lengthBox,lengthBox,0,x+txtDis,y+txtDis);
