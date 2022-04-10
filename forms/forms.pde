@@ -45,7 +45,7 @@ void reSetBoxes(){
    pg.beginDraw();
     pg.background(255);
     
-    for (int j=-1 ; j<9;j++){
+    for (int j=-1 ; j<totalBoxes/10;j++){
       for (int i=0 ; i<10;i++){
         pg.fill(getColor(f(i)));
         pg.rect(i*txtDis,j*txtDis+txtDis,txtDis,txtDis);
@@ -62,7 +62,7 @@ void reSetBoxes(){
   pg2.beginDraw();
     pg2.background(255);
     
-    for (int j=-1 ; j<9;j++){
+    for (int j=-1 ; j<totalBoxes/10;j++){
       for (int i=0 ; i<10;i++){
         pg2.fill(getColor(f2(i)));//testing
         pg2.rect(i*txtDis,j*txtDis+txtDis,txtDis,txtDis);
@@ -125,6 +125,8 @@ void draw() {
   
   PShape txt = botoun();
   shape(txt);
+  
+  image(pg,0,0,400,400);
   
 
 
