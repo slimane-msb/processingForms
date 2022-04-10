@@ -115,13 +115,13 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
       int y=0;
         x = (nb%10)*txtDis;
         y = (nb/10)*txtDis;
-        res.texture(pg);
-      res.attrib("idnum", (float)(nb));
-      res.vertex(0, 0,0,x,y);
-      res.vertex(lengthBox,0,0,x+txtDis,y);
-      res.vertex(lengthBox,lengthBox,0,x+txtDis,y+txtDis);
-      res.vertex(0,lengthBox,0,x,y+txtDis  );
-      //front
+      res.texture(pg);
+      //up
+      res.vertex(0, 0,0,x+txtDis,y+txtDis);
+      res.vertex(lengthBox,0,0, x,y+txtDis);
+      res.vertex(lengthBox,lengthBox,0,x,y);
+      res.vertex(0,lengthBox,0, x+txtDis,y );
+      //down
       res.vertex(0, 0,lengthBox,x,y);
       res.vertex(lengthBox,0,lengthBox,x+txtDis,y);
       res.vertex(lengthBox,lengthBox,lengthBox,x+txtDis,y+txtDis);
@@ -132,20 +132,20 @@ PShape vertexBox(int lengthBox,PGraphics pg,int nb){
       res.vertex(lengthBox,lengthBox,lengthBox,x+txtDis,y+txtDis);
       res.vertex(lengthBox, 0,lengthBox,x,y+20  );
        //left
-      res.vertex(0, 0,0,x,y);
-      res.vertex(0,lengthBox,0,x+txtDis,y);
-      res.vertex(0,lengthBox,lengthBox,x+txtDis,y+txtDis);
-      res.vertex(0, 0,lengthBox,x,y+20 );
-      //up
+      res.vertex(0, 0,0,x+txtDis,y);
+      res.vertex(0,lengthBox,0,x,y);
+      res.vertex(0,lengthBox,lengthBox,x,y+20);
+      res.vertex(0, 0,lengthBox, x+txtDis,y+txtDis);
+      //front
       res.vertex(0, 0,0,x,y);
       res.vertex(lengthBox,0,0,x+txtDis,y);
       res.vertex(lengthBox,0,lengthBox,x+txtDis,y+txtDis);
       res.vertex(0, 0,lengthBox,x,y+20);
-      //down
-      res.vertex(0, lengthBox,0,x,y);
-      res.vertex(lengthBox,lengthBox,x+txtDis,y);
-      res.vertex(lengthBox,lengthBox,lengthBox,x+txtDis,y+txtDis);
-      res.vertex(0, lengthBox,lengthBox,x,y+20);
+      //behind
+      res.vertex(0, lengthBox,0,x+txtDis,y);
+      res.vertex(lengthBox,lengthBox,x,y);
+      res.vertex(lengthBox,lengthBox,lengthBox,x,y+20);
+      res.vertex(0, lengthBox,lengthBox,x+txtDis,y+txtDis);
       
     res.endShape();
   popMatrix();
