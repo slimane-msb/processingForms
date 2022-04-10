@@ -126,7 +126,7 @@ void draw() {
   PShape txt = botoun();
   shape(txt);
   
-  image(pg,0,0,400,400);
+  //image(pg,0,0,400,400);
   
 
 
